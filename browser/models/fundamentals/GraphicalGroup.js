@@ -61,24 +61,4 @@ function GraphicalGroup(){
       _ears[on][i].mute = false;
     }
   }
-
-  this.export = function(){
-    var ex = _parent.export.call(this);
-    ex.elems = new Array();
-    for(elem in _elements){
-      ex.elems.push(elem);
-    }
-    return ex;
-  }
-
-  this.import = function(elemStruct, references){
-    _parent.import.call(this, elemStruct, references);
-    if(elemStruct.elems){
-      for(var i = 0; i < elemStruct.elems.length; i++){
-        if(elemStruct.elems[i] in references){
-          this.add(references[elemStruct.elems[i]]);
-        }
-      }
-    }
-  }
 }

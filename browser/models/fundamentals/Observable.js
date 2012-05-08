@@ -1,6 +1,4 @@
 function Observable(){
-  var _self = inherit(this, new Exportable());
-  var _parent = _self._parent;
   this.className = "Observable";
 
   var _listeners = {};

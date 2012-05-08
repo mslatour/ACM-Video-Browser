@@ -113,41 +113,4 @@ function Layer(application,previousLayer){
       }
     }
   }
-
-  this.export = function(){
-    var ex = _parent.export.call(this);
-    if(this.getPreviousLayer() != null) 
-      ex.prevLayer = this.getPreviousLayer().getUniqueId();
-    return ex;
-  }
-
-  this.exportAll = function(scene){
-    if(this.isExportable())
-      scene.layers[this.getUniqueId()] = this.export();
-    for(var i = 0; i < _graphicals.length; i++){
-      if(_graphicals[i].isExportable()){
-        if(
-          _graphicals[i].className == "SnapRegion" || 
-          _graphicals[i].className == "BottomSnapRegion"
-        ){
-          scene.snapRegions[_graphicals[i].getUniqueId()] = _graphicals[i].export();
-        }else{
-          scene.elems[_graphicals[i].getUniqueId()] = _graphicals[i].export();
-        }
-      }
-    }
-    if(this.getNextLayer())
-      scene = this.getNextLayer().exportAll(scene);
-    return scene;
-  }
-
-  this.import = function(elemStruct, references){
-    _parent.import.call(this, elemStruct, references);
-    this.setApplication(references.app);
-    if( elemStruct.prevLayer && elemStruct.prevLayer in references ){
-      this.setPreviousLayer(references[elemStruct.prevLayer]);
-      references[elemStruct.prevLayer].setNextLayer(this);
-    }
-  }
-
 }

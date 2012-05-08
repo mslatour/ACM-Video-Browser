@@ -27,17 +27,4 @@ function Rectangle(stroke, lineWidth){
     context.strokeStyle = this.getStroke();
     context.stroke();
   }
-
-  this.export = function(){
-    var ex = _parent.export.call(this);
-    ex.stroke = this.getStroke();
-    ex.lineWidth = this.getLineWidth();
-    return ex;
-  }
-
-  this.import = function(elemStruct, references){
-    _parent.import.call(this, elemStruct, references);
-    if(elemStruct.stroke) this.setStroke(elemStruct.stroke);
-    if(elemStruct.lineWidth) this.setLineWidth(elemStruct.lineWidth);
-  }
 }

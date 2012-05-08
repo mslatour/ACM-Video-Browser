@@ -29,7 +29,6 @@ function ACMBrowserApp(canvas){
    * the floor layer is the first element in that chain
    **/
   var _floor = new Layer(this, null);
-  _floor.setUniqueId("FloorLayer");
  
   this.getFloorLayer = function(){ return _floor };
   this.setFloorLayer = function(floor){ _floor = floor; };
