@@ -97,6 +97,12 @@ function ACMBrowserApp(canvas){
       this.initMouse();
       this.addListeners();
     }
+
+    // Draw spiral
+    var spiral = new Spiral();
+    this.getFloorLayer().add(spiral);
+
+    // Paint application
     this.getFloorLayer().paint(this.getContext());
   };
 }
