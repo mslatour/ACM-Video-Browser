@@ -30,7 +30,7 @@ function ACMBrowserApp(canvas){
    **/
   var _floor = new Layer(this, null);
   _floor.setUniqueId("FloorLayer");
-  
+ 
   this.getFloorLayer = function(){ return _floor };
   this.setFloorLayer = function(floor){ _floor = floor; };
 
@@ -41,11 +41,13 @@ function ACMBrowserApp(canvas){
   this.getHeight = function(){ return this.getCanvas().height; };
   this.getWidth = function(){ return this.getCanvas().width; };
 
+  // Load mouse event helper
   this.initMouse = function(){
     _mouse = new Mouse(this.getCanvas());
   };
   this.getMouse = function(){ return _mouse; };
   
+  // Init native event listeners
   this.addListeners = function(){
     this.getMouse().listen("onMouseDown", function(e){
       _ref.onEvent(e,"onMouseDown")
@@ -64,6 +66,7 @@ function ACMBrowserApp(canvas){
     });
   }
 
+  // Handle raw event and propagate to layers
   this.onEvent = function(e, callback){
     var x;
     var y;
@@ -84,6 +87,11 @@ function ACMBrowserApp(canvas){
     this.getFloorLayer().paint(this.getContext());
   }
 
+  /**
+   * Main run method
+   * 
+   * boolean static - Whether event handling is activated
+   **/
   this.run = function(static){
     if(!static){
       this.initMouse();
