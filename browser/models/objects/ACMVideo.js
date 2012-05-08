@@ -16,12 +16,12 @@ function ACMVideo(data){
   var _screenshot = data.screenshot;
   var _year = data.year;
 
-  this.getVideoId = function(){ return _video_id; }
+  this.getVideoId = function(){ return _video_id; };
 
-  this.getScreenshot = function(){ return _screenshot; }
+  this.getScreenshot = function(){ return _screenshot; };
   this.setScreenshot = function(screenshot){
     _screenshot = screenshot;
-  }
+  };
 
   this.draw = function(context){
     _parent.draw(context);

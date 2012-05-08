@@ -97,11 +97,20 @@ function ACMBrowserApp(canvas){
       this.initMouse();
       this.addListeners();
     }
+   
+    this.drawScene3();
 
+    // Paint application
+    this.getFloorLayer().paint(this.getContext());
+  }
+
+  this.drawScene1 = function(){
     // Draw spiral
     var spiral = new Spiral();
     this.getFloorLayer().add(spiral);
+  }
 
+  this.drawScene2 = function(){
     // Create obj1
     var obj1 = new FilledRectangle('white', 'black', 1);
     obj1.setWidth(50);
@@ -119,8 +128,31 @@ function ACMBrowserApp(canvas){
     this.getFloorLayer().add(conn);
     this.getFloorLayer().add(obj1);
     this.getFloorLayer().add(obj2);
+  };
 
-    // Paint application
-    this.getFloorLayer().paint(this.getContext());
+  this.drawScene3 = function(){
+    // Create obj1
+    var obj1 = new ACMVideo({
+      video_id:1, 
+      screenshot: "http://localhost/acm-data/acm-video-pages/dvs/images/videos2002/01kaufmann.jpg",
+      year: 2002
+    });
+    obj1.move(30,40);
+
+    // Create obj2
+    var obj2 = new ACMVideo({
+      video_id:2,
+      screenshot: "http://localhost/acm-data/acm-video-pages/dvs/images/videos1994/knightly.jpg",
+      year: 1994
+    });
+    obj2.move(80,120);
+
+    // Create connection
+    var conn = new Connection(obj1, obj2);
+    
+    // Add to layer
+    this.getFloorLayer().add(conn);
+    this.getFloorLayer().add(obj1);
+    this.getFloorLayer().add(obj2);
   };
 }
