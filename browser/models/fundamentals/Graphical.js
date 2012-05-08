@@ -98,6 +98,13 @@ function Graphical(){
     this.tell("onMove", {x:x, y:y});
   }
 
+  this.moveToCenter = function(){
+    this.move(
+      (this.getLayer().getApplication().getWidth()/2)-(this.getWidth()/2),
+      (this.getLayer().getApplication().getHeight()/2)-(this.getHeight()/2)
+    )
+  }
+
   this.beforeDraw = function(context){}
   this.draw = function(context){}
   this.afterDraw = function(context){}

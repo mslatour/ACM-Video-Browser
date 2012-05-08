@@ -62,6 +62,18 @@ function Layer(application,previousLayer){
     graphical.setLayer(this);
   }
 
+  this.remove = function(graphical){
+    graphical.setLayer(null);
+    var graphicals = new Array();
+    var j = 0;
+    for(var i = 0; i < _graphicals.length; i++){
+      if( _graphicals[i] != graphical ){
+        graphicals[j++] = _graphicals[i];
+      }
+    }
+    _graphicals = graphicals;
+  }
+
   this.paint = function(context){
     this._context = context;
     for(var i = 0; i < _graphicals.length; i++){

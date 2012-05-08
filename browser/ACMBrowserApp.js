@@ -29,7 +29,7 @@ function ACMBrowserApp(canvas){
    * the floor layer is the first element in that chain
    **/
   var _floor = new Layer(this, null);
- 
+  
   this.getFloorLayer = function(){ return _floor };
   this.setFloorLayer = function(floor){ _floor = floor; };
 
@@ -97,7 +97,7 @@ function ACMBrowserApp(canvas){
       this.addListeners();
     }
    
-    this.drawScene3();
+    this.drawScene4();
 
     // Paint application
     this.getFloorLayer().paint(this.getContext());
@@ -156,4 +156,40 @@ function ACMBrowserApp(canvas){
     this.getFloorLayer().add(obj1);
     this.getFloorLayer().add(obj2);
   };
+
+  this.drawScene4 = function(){
+    var floor_layer = this.getFloorLayer();
+    var connection_layer = new Layer(this, floor_layer);
+    var video_layer = new Layer(this, connection_layer);
+
+    // Create white background
+    var bg = new FilledRectangle("white","white",1);
+    bg.setWidth(floor_layer.getApplication().getWidth());
+    bg.setHeight(floor_layer.getApplication().getHeight());
+    floor_layer.add(bg);
+
+    // Create loader
+    var loader = new ImageShape(
+      "http://jimpunk.net/Loading/wp-content/uploads/loading1.gif"
+    );
+    video_layer.add(loader);
+    loader.moveToCenter();
+    floor_layer.paint(this.getContext());
+
+    fetchVideos(function(data){
+      var videos = data['videos'];
+      var video;
+      for(var i = 0; i < videos.length; i++){
+        video = new ACMVideo({
+          video_id: videos[i].video_id, 
+          screenshot: videos[i].screenshot,
+          year: videos[i].year
+        });
+        video.move(i*10,i*10);
+        video_layer.add(video);
+      }
+      video_layer.remove(loader);
+      floor_layer.repaint();
+    });
+  }
 }
