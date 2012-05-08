@@ -86,6 +86,9 @@ function ACMBrowserApp(canvas){
     this.getFloorLayer().paint(this.getContext());
   }
 
+  var _videoCollection = new Collection();
+  this.getVideoCollection = function(){ return _videoCollection; };
+
   /**
    * Main run method
    * 
@@ -176,7 +179,7 @@ function ACMBrowserApp(canvas){
     loader.moveToCenter();
     floor_layer.paint(this.getContext());
 
-    var video_collection = new Collection();
+    var video_collection = this.getVideoCollection();
 
     fetchVideos(function(data){
       var videos = data['videos'];
