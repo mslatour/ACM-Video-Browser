@@ -8,9 +8,9 @@ include("connect.php");
 
 ob_start();
 // Set queries
-$q_get_5_videos = "SELECT * FROM `Videos` LIMIT 5";
+$q_get_videos = "SELECT * FROM `Videos` LIMIT 10";
 
-$result = mysql_query($q_get_5_videos);
+$result = mysql_query($q_get_videos);
 
 $videos = array();
 

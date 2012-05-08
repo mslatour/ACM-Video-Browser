@@ -185,7 +185,7 @@ function ACMBrowserApp(canvas){
           screenshot: videos[i].screenshot,
           year: videos[i].year
         });
-        video.move(i*10,i*10);
+        video.move(i*i*6,i*30);
         video_layer.add(video);
       }
       video_layer.remove(loader);
