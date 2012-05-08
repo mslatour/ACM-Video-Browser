@@ -22,7 +22,15 @@ function Connection(from, to){
   this.draw = function(context){
     _parent.draw(context);
     var from = this.getFromGraphical();
-    context.moveTo(from.getX(), from.getY());
-    context.lineTo(to.getX(), to.getY());
+    var to = this.getToGraphical();
+    context.moveTo(
+      Math.floor(from.getX()+(from.getWidth()/2)), 
+      Math.floor(from.getY()+(from.getHeight()/2))
+    );
+    context.lineTo(
+      Math.floor(to.getX()+(to.getWidth()/2)), 
+      Math.floor(to.getY()+(to.getHeight()/2))
+    );
+    context.stroke();
   }
 }

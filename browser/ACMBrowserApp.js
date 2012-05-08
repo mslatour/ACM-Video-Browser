@@ -102,6 +102,24 @@ function ACMBrowserApp(canvas){
     var spiral = new Spiral();
     this.getFloorLayer().add(spiral);
 
+    // Create obj1
+    var obj1 = new FilledRectangle('white', 'black', 1);
+    obj1.setWidth(50);
+    obj1.setHeight(50);
+    obj1.move(30,40);
+
+    // Create obj2
+    var obj2 = new FilledRectangle('white', 'black', 1);
+    obj2.move(80,100);
+
+    // Create connection
+    var conn = new Connection(obj1, obj2);
+    
+    // Add to layer
+    this.getFloorLayer().add(conn);
+    this.getFloorLayer().add(obj1);
+    this.getFloorLayer().add(obj2);
+
     // Paint application
     this.getFloorLayer().paint(this.getContext());
   };

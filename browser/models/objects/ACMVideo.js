@@ -4,15 +4,17 @@
  * data - Associcative array containing information about the video.
  *        This information consists of:
  *          * id
+ *          * year
  *          * screenshot (path)
  **/
-function ACMVideo(video_id, screenshot){
-  var _self = inherit(this, new ImageShape(screenshot));
+function ACMVideo(data){
+  var _self = inherit(this, new ImageShape(data.screenshot));
   var _parent = _self._parent;
   this.className = "ACMVideo";
 
-  var _video_id = video_id;
-  var _screenshot = screenshot;
+  var _video_id = data.video_id;
+  var _screenshot = data.screenshot;
+  var _year = data.year;
 
   this.getVideoId = function(){ return _video_id; }
 
