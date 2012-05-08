@@ -176,6 +176,8 @@ function ACMBrowserApp(canvas){
     loader.moveToCenter();
     floor_layer.paint(this.getContext());
 
+    var video_collection = new Collection();
+
     fetchVideos(function(data){
       var videos = data['videos'];
       var video;
@@ -185,6 +187,7 @@ function ACMBrowserApp(canvas){
           screenshot: videos[i].screenshot,
           year: videos[i].year
         });
+        video_collection.addElement(videos[i].video_id, video);
         video.move(i*i*6,i*30);
         video_layer.add(video);
       }
