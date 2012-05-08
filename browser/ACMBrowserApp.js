@@ -136,6 +136,7 @@ function ACMBrowserApp(canvas){
       screenshot: "http://localhost/acm-data/acm-video-pages/dvs/images/videos2002/01kaufmann.jpg",
       year: 2002
     });
+    obj1.scaleToBox(100,100, false);
     obj1.move(30,40);
 
     // Create obj2
@@ -144,7 +145,8 @@ function ACMBrowserApp(canvas){
       screenshot: "http://localhost/acm-data/acm-video-pages/dvs/images/videos1994/knightly.jpg",
       year: 1994
     });
-    obj2.move(80,120);
+    obj2.scaleToBox(100,100, false);
+    obj2.move(180,120);
 
     // Create connection
     var conn = new Connection(obj1, obj2);

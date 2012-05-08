@@ -32,6 +32,28 @@ function Graphical(){
     this.setWidth(this.getWidth()*scale);
     this.setHeight(this.getHeight()*scale);
   }
+  
+  /**
+   * Scale to fit inside box
+   * int bw        - Width of box
+   * int bh        - Height of box
+   * boolean force - Force upscale
+   */
+  this.scaleToBox = function(bw, bh, force){
+    var w = this.getWidth(); 
+    var h = this.getHeight();
+    if( w > h ){
+      if( force || w > bw ){
+        this.setWidth(bw);
+        this.setHeight((h/w)*bw);
+      }
+    }else{
+      if( force || h > bh ){
+        this.setWidth((w/h)*bh);
+        this.setHeigth(bh);
+      }
+    }
+  }
 
   this.isEnlarged = function(){ return _enlarged; };
 
