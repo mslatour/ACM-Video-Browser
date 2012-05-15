@@ -83,7 +83,7 @@ function ACMBrowserApp(canvas){
     e.canvasY = y;
 
     this.getFloorLayer().getTopLayer().onEvent(e, callback);
-    this.getFloorLayer().paint(this.getContext());
+    this.getFloorLayer().repaint();
   }
 
   var _videoCollection = new Collection();
