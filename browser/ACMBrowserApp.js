@@ -100,7 +100,7 @@ function ACMBrowserApp(canvas){
       this.addListeners();
     }
    
-    this.drawScene1();
+    this.drawScene6();
 
     // Paint application
     this.getFloorLayer().paint(this.getContext());
@@ -256,5 +256,49 @@ function ACMBrowserApp(canvas){
       video_layer.remove(loader);
       floor_layer.repaint();
     });
+  }
+  
+  this.drawScene6 = function(){
+    var floor_layer = this.getFloorLayer();
+
+    var lm = new CircleFitting(10, 0.25);
+
+    // Create origin
+    var origin = new FilledRectangle('black', 'black', 1);
+    origin.move(600,400);
+    floor_layer.add(origin);
+
+    // Create obj1
+    var obj1 = new FilledRectangle('white', 'black', 1);
+    lm.addElement(1,obj1, false);
+    floor_layer.add(obj1);
+    floor_layer.add(new Connection(obj1, origin));
+    // Create obj2
+    var obj2 = new FilledRectangle('white', 'black', 2);
+    lm.addElement(2,obj2, false);
+    floor_layer.add(obj2);
+    floor_layer.add(new Connection(obj2, origin));
+    // Create obj3
+    var obj3 = new FilledRectangle('white', 'black', 3);
+    lm.addElement(3,obj3, false);
+    floor_layer.add(obj3);
+    floor_layer.add(new Connection(obj3, origin));
+    // Create obj4
+    var obj4 = new FilledRectangle('white', 'black', 4);
+    lm.addElement(4,obj4, false);
+    floor_layer.add(obj4);
+    floor_layer.add(new Connection(obj4, origin));
+    // Create obj5
+    var obj5 = new FilledRectangle('white', 'black', 5);
+    lm.addElement(5,obj5, false);
+    floor_layer.add(obj5);
+    floor_layer.add(new Connection(obj5, origin));
+    // Create obj6
+    var obj6 = new FilledRectangle('white', 'black', 6);
+    lm.addElement(6,obj6, false);
+    floor_layer.add(obj6);
+    floor_layer.add(new Connection(obj6, origin));
+
+    lm.layout(origin, Math.PI);
   }
 }
