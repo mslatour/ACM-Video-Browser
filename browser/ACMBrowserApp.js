@@ -260,13 +260,25 @@ function ACMBrowserApp(canvas){
   
   this.drawScene6 = function(){
     var floor_layer = this.getFloorLayer();
-
-    var lm = new CircleFitting(10, 0.25);
+    
+    // Draw spiral
+    var spiral = new Spiral(150, 80, 0.1, 15, 0.08);
+    floor_layer.add(spiral);
 
     // Create origin
-    var origin = new FilledRectangle('black', 'black', 1);
-    origin.move(600,400);
+    var origin = new FilledRectangle('red', 'black', 1);
     floor_layer.add(origin);
+    spiral.addElement(1,origin, true);
+    
+    // Create origin2
+    var origin2 = new FilledRectangle('red', 'black', 1);
+    floor_layer.add(origin2);
+    spiral.addElement(2, origin2, true);
+    
+    spiral.layout();
+
+    var lm = new CircleFitting(10, 0.20);
+    var lm2 = new CircleFitting(10, 0.20);
 
     // Create obj1
     var obj1 = new FilledRectangle('white', 'black', 1);
@@ -280,25 +292,26 @@ function ACMBrowserApp(canvas){
     floor_layer.add(new Connection(obj2, origin));
     // Create obj3
     var obj3 = new FilledRectangle('white', 'black', 3);
-    lm.addElement(3,obj3, false);
+    lm2.addElement(3,obj3, false);
     floor_layer.add(obj3);
-    floor_layer.add(new Connection(obj3, origin));
+    floor_layer.add(new Connection(obj3, origin2));
     // Create obj4
     var obj4 = new FilledRectangle('white', 'black', 4);
-    lm.addElement(4,obj4, false);
+    lm2.addElement(4,obj4, false);
     floor_layer.add(obj4);
-    floor_layer.add(new Connection(obj4, origin));
+    floor_layer.add(new Connection(obj4, origin2));
     // Create obj5
     var obj5 = new FilledRectangle('white', 'black', 5);
-    lm.addElement(5,obj5, false);
+    lm2.addElement(5,obj5, false);
     floor_layer.add(obj5);
-    floor_layer.add(new Connection(obj5, origin));
+    floor_layer.add(new Connection(obj5, origin2));
     // Create obj6
     var obj6 = new FilledRectangle('white', 'black', 6);
-    lm.addElement(6,obj6, false);
+    lm2.addElement(6,obj6, false);
     floor_layer.add(obj6);
-    floor_layer.add(new Connection(obj6, origin));
+    floor_layer.add(new Connection(obj6, origin2));
 
-    lm.layout(origin, Math.PI);
+    lm.layout(origin, origin.getRotation()+(Math.PI/2));
+    lm2.layout(origin2, origin2.getRotation()-(Math.PI/2));
   }
 }

@@ -114,11 +114,12 @@ function Graphical(){
 
   this.beforeDraw = function(context){
     context.save();
-    context.rotate(Math.PI*2*(_rotate/360));
+  //  context.rotate(Math.PI*2*(_rotate/360));
   }
   this.draw = function(context){}
   this.afterDraw = function(context){
     context.restore();
+
   }
 
   this.paint = function(context){

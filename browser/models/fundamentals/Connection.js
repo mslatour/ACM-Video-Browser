@@ -1,10 +1,12 @@
-function Connection(from, to){
+function Connection(from, to, width){
   var _self = inherit(this, new Shape());
   var _parent = _self._parent;
   this.className = "Connection";
 
   var _from;
   var _to;
+
+  var _lineWidth = (width != undefined ? width : 1);
 
   this.getFromGraphical = function(){ return _from; };
   this.setFromGraphical = function(from){
@@ -15,6 +17,8 @@ function Connection(from, to){
   this.setToGraphical = function(to){
     _to = to;
   }
+
+  this.getLineWidth = function(){ return _lineWidth; }
 
   this.setFromGraphical(from);
   this.setToGraphical(to);
@@ -31,6 +35,7 @@ function Connection(from, to){
       Math.floor(to.getX()+(to.getWidth()/2)), 
       Math.floor(to.getY()+(to.getHeight()/2))
     );
+    context.lineWidth = this.getLineWidth();
     context.stroke();
   }
 }
