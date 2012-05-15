@@ -8,7 +8,7 @@ function CircleFitting(offset, fragment){
   var _self = inherit(this, new LayoutManager());
 
   this.layout = function(origin, angle){
-    var width = 0;
+    var width = 30;
     var num = 0;
     var elements = this.getElements();
     for(var id in elements){
@@ -17,6 +17,7 @@ function CircleFitting(offset, fragment){
     }
 
     var radius = Math.ceil(((width / fragment) / (2* Math.PI)));
+    angle += fragment*Math.PI;
     var x, y, i = 1;
     var startx = origin.getX();
     var starty = origin.getY();

@@ -5,11 +5,13 @@ function LayoutManager(){
 
   var elements = {};
 
-  this.addElement = function(id, element, rotate){
+  this.addElement = function(id, element, rotate, centered){
     if(rotate == undefined) rotate = false;
+    if(centered == undefined) centered = true;
     this.addElementStruct(id, {
       "element": element,
-      "rotate": rotate
+      "rotate": rotate,
+      "centered": centered
     });
   }
 
@@ -44,7 +46,11 @@ function LayoutManager(){
 
   this.layoutElement = function(id, newX, newY, newRot){
     var elements = this.getElements();
-    if (
+    if(elements[id].centered){
+      newX -= (elements[id].element.getWidth()/2);
+      newY -= (elements[id].element.getHeight()/2);
+    }
+    if(
       elements[id].element.getX() != newX ||
       elements[id].element.getY() != newY
     ){

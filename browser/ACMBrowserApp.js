@@ -261,8 +261,14 @@ function ACMBrowserApp(canvas){
   this.drawScene6 = function(){
     var floor_layer = this.getFloorLayer();
     
+    var centerX = Math.floor(this.getWidth()/2);
+    var centerY = Math.floor(this.getHeight()/2);
+
+    var centerPoint = new GraphicalCoordinate(centerX, centerY);
+
     // Draw spiral
-    var spiral = new Spiral(150, 80, 0.1, 15, 0.08);
+    var spiral = new Spiral(150, 70, 0.1, 15, 0.08);
+    spiral.move(centerX, centerY-30);
     floor_layer.add(spiral);
 
     // Create origin
@@ -275,43 +281,44 @@ function ACMBrowserApp(canvas){
     floor_layer.add(origin2);
     spiral.addElement(2, origin2, true);
     
+    // Create origin3
+    var origin3 = new FilledRectangle('red', 'black', 1);
+    floor_layer.add(origin3);
+    spiral.addElement(3, origin3, true);
+    
     spiral.layout();
 
-    var lm = new CircleFitting(10, 0.20);
-    var lm2 = new CircleFitting(10, 0.20);
+    var lm = new CircleFitting(5, 0.25);
+    var lm2 = new CircleFitting(5, 0.25);
+    var lm3 = new CircleFitting(5, 0.25);
 
-    // Create obj1
-    var obj1 = new FilledRectangle('white', 'black', 1);
-    lm.addElement(1,obj1, false);
-    floor_layer.add(obj1);
-    floor_layer.add(new Connection(obj1, origin));
-    // Create obj2
-    var obj2 = new FilledRectangle('white', 'black', 2);
-    lm.addElement(2,obj2, false);
-    floor_layer.add(obj2);
-    floor_layer.add(new Connection(obj2, origin));
-    // Create obj3
-    var obj3 = new FilledRectangle('white', 'black', 3);
-    lm2.addElement(3,obj3, false);
-    floor_layer.add(obj3);
-    floor_layer.add(new Connection(obj3, origin2));
-    // Create obj4
-    var obj4 = new FilledRectangle('white', 'black', 4);
-    lm2.addElement(4,obj4, false);
-    floor_layer.add(obj4);
-    floor_layer.add(new Connection(obj4, origin2));
-    // Create obj5
-    var obj5 = new FilledRectangle('white', 'black', 5);
-    lm2.addElement(5,obj5, false);
-    floor_layer.add(obj5);
-    floor_layer.add(new Connection(obj5, origin2));
-    // Create obj6
-    var obj6 = new FilledRectangle('white', 'black', 6);
-    lm2.addElement(6,obj6, false);
-    floor_layer.add(obj6);
-    floor_layer.add(new Connection(obj6, origin2));
+    var i, obj;
 
-    lm.layout(origin, origin.getRotation()+(Math.PI/2));
-    lm2.layout(origin2, origin2.getRotation()-(Math.PI/2));
+    // Create objects for origin
+    for(i = 0; i < 5; i++){
+      obj = new FilledRectangle('white', 'black', 1);
+      lm.addElement(i,obj, false);
+      floor_layer.add(obj);
+      floor_layer.add(new Connection(obj, origin));
+    }
+    lm.layout(origin, Math.PI + origin.getRotation());
+    
+    // Create objects for origin2
+    for(i = 0; i < 3; i++){
+      obj = new FilledRectangle('white', 'black', 1);
+      lm2.addElement(i,obj, false);
+      floor_layer.add(obj);
+      floor_layer.add(new Connection(obj, origin2));
+    }
+    lm2.layout(origin2, Math.PI + origin2.getRotation());
+    
+    // Create objects for origin3
+    for(i = 0; i < 2; i++){
+      obj = new FilledRectangle('white', 'black', 1);
+      lm3.addElement(i,obj, false);
+      floor_layer.add(obj);
+      floor_layer.add(new Connection(obj, origin3));
+    }
+    lm3.layout(origin3, Math.PI + origin3.getRotation());
   }
 }
