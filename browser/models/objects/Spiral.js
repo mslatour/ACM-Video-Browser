@@ -37,12 +37,12 @@ function Spiral(length, A, B, C){
     var startx = Math.floor(this.getLayer().getApplication().getWidth()/2);
     var starty = Math.floor(this.getLayer().getApplication().getHeight()/2);
 
-    i = 50;
+    i = 0;
     for ( elem in elements ){
       angle = A * i;
       x=startx+((B*angle)*Math.cos(angle) * ( C * angle));
       y=starty+((B*angle)*Math.sin(angle) * ( C * angle));
-      this.layoutElement(elem, x, y);
+      this.layoutElement(elem, x, y, angle);
       i += offset;
     }
   }

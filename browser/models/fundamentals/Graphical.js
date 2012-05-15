@@ -7,6 +7,7 @@ function Graphical(){
   var _y = 0;
   var _width = 30;
   var _height = 30;
+  var _rotate = 0;
   
   var _enlarged = false;
 
@@ -32,6 +33,12 @@ function Graphical(){
     this.setWidth(this.getWidth()*scale);
     this.setHeight(this.getHeight()*scale);
   }
+
+  this.rotate = function(rotate){
+    _rotate = rotate;
+  }
+
+  this.getRotation = function(){ return _rotate; }
   
   /**
    * Scale to fit inside box
@@ -105,9 +112,14 @@ function Graphical(){
     )
   }
 
-  this.beforeDraw = function(context){}
+  this.beforeDraw = function(context){
+    context.save();
+    context.rotate(Math.PI*2*(_rotate/360));
+  }
   this.draw = function(context){}
-  this.afterDraw = function(context){}
+  this.afterDraw = function(context){
+    context.restore();
+  }
 
   this.paint = function(context){
     this.beforeDraw(context);

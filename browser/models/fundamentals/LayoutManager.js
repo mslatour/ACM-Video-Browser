@@ -5,16 +5,21 @@ function LayoutManager(){
 
   var elements = {};
 
-  this.addElement = function(id, element){
-    // Cater for expansion of meta data
-    elements[id] = {
-      "element": element
-    };
+  this.addElement = function(id, element, rotate){
+    if(rotate == undefined) rotate = false;
+    this.addElementStruct(id, {
+      "element": element,
+      "rotate": rotate
+    });
   }
 
-  this.addCollection = function(collection){
+  this.addElementStruct = function(id, struct){
+    elements[id] = struct;
+  }
+
+  this.addCollection = function(collection, rotate){
     for(var key in collection.getRawCollection()){
-      this.addElement(key, collection.getElement(key));
+      this.addElement(key, collection.getElement(key), rotate);
     }
   }
 
@@ -37,13 +42,20 @@ function LayoutManager(){
   this.layout = function(){
   };
 
-  this.layoutElement = function(id, newX, newY){
+  this.layoutElement = function(id, newX, newY, newRot){
     var elements = this.getElements();
     if (
       elements[id].element.getX() != newX ||
       elements[id].element.getY() != newY
     ){
       elements[id].element.move(newX, newY);
+      if(
+        newRot != undefined && 
+        elements[id].rotate &&
+        elements[id].element.getRotation() != newRot
+      ){
+        elements[id].element.rotate(newRot);
+      }
     }
   }
 }

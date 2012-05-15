@@ -100,7 +100,7 @@ function ACMBrowserApp(canvas){
       this.addListeners();
     }
    
-    this.drawScene5();
+    this.drawScene1();
 
     // Paint application
     this.getFloorLayer().paint(this.getContext());
@@ -115,23 +115,22 @@ function ACMBrowserApp(canvas){
 
     // Create obj1
     var obj1 = new FilledRectangle('white', 'black', 1);
-    spiral.addElement(1,obj1);
+    spiral.addElement(1,obj1, false);
     video_layer.add(obj1);
     // Create obj2
     var obj2 = new FilledRectangle('white', 'black', 1);
-    spiral.addElement(2,obj2);    
+    spiral.addElement(2,obj2, false);
     video_layer.add(obj2);
     // Create obj3
     var obj3 = new FilledRectangle('white', 'black', 1);
-    spiral.addElement(3,obj3);
+    spiral.addElement(3,obj3, false);
     video_layer.add(obj3);
     // Create obj4
     var obj4 = new FilledRectangle('white', 'black', 1);
-    spiral.addElement(4,obj4);
+    spiral.addElement(4,obj4, false);
     video_layer.add(obj4);
     
     spiral.layout();
-
   }
 
   this.drawScene2 = function(){
@@ -252,7 +251,7 @@ function ACMBrowserApp(canvas){
         video_collection.addElement(videos[i].video_id, video);
         video_layer.add(video);
       }
-      spiral.addCollection(video_collection);
+      spiral.addCollection(video_collection, false);
       spiral.layout();
       video_layer.remove(loader);
       floor_layer.repaint();
