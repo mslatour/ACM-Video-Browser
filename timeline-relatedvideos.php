@@ -20,7 +20,7 @@ mysql_select_db("my_db", $con);
 
 
 //gets title, authors, video, paper and year of selected video.
-$result = mysql_query("SELECT Metadata.title AS title, Metadata.authors AS authors, result.video_link AS videolink, result.paper_link AS paperlink, Metadata.year AS year FROM Metadata, result WHERE Metadata.id = '$id' AND Metadata.id = result.id");
+$result = mysql_query("SELECT Metadata.title AS title, Metadata.authors AS authors, result.video_link AS videolink, result.paper_link AS paperlink, Metadata.year AS year, Metadata.Keywords AS keywords FROM Metadata, result WHERE Metadata.id = '$id' AND Metadata.id = result.id");
 $row = array();
 $row = mysql_fetch_array($result);
 
@@ -158,6 +158,14 @@ Frank Nack, CWI</p>
 <li id="2003">
 <h3>2003: Berkeley, CA, USA</h3>
 <ul class="column">
+<div class="details" style="display:none">
+<p>The Multimedia 2003 Video Review Committee included the following individuals:<br />
+<br />
+Lynn Wilcox (chair), FX Palo Alto Laboratory<br />
+Andreas Girgensohn, FX Palo Alto Laboratory<br />
+Horace Ip, City University of Hong Kong<br />
+Frank Nack, CWI</p>
+</div>
 <img class="video" id="2003-VD_1" src="acm-video-pages/dvs/images/videos2003/01Hua.jpg" width="96" height="72" />
 <img class="video" id="2003-VD_2" src="acm-video-pages/dvs/images/videos2003/02Tryfanos.jpg" width="96" height="72" />
 <img class="video" id="2003-VD_3" src="acm-video-pages/dvs/images/videos2003/03Yip.jpg" width="96" height="72" />
@@ -174,6 +182,16 @@ Frank Nack, CWI</p>
 <li id="2004">
 <a href="http://www.sigmm.org/archive/MM/mm04/index.htm" target="_blank"><h3>2004: New York, NY, USA</h3></a>
 <ul class="column">
+<div class="details" style="display:none">
+<p>The Multimedia 2004 Video Review Committee included the following individuals:<br />
+<br />
+Frank Nack (chair), CWI<br />
+Annet Dekker, Netherlands Media Art Institute & Montevideo Time Based Arts<br />
+Andreas Girgensohn, FX Palo Alto Laboratory<br />
+Alejandro Jaimes, FujiXerox<br />
+Andruid Kerne, Texas A&M University, Department of Computer Science<br />
+Lynn Wilcox, FX Palo Alto Laboratory</p>
+</div>
 <img class="video" id="2004-VD_1" src="acm-video-pages/dvs/images/videos2004/VD_1.jpg" width="96" height="72" />
 <img class="video" id="2004-VD_2" src="acm-video-pages/dvs/images/videos2004/VD_2.jpg" width="96" height="72" />
 <img class="video" id="2004-VD_3" src="acm-video-pages/dvs/images/videos2004/VD_3.jpg" width="96" height="72" />
@@ -189,6 +207,15 @@ Frank Nack, CWI</p>
 <li id="2005">
 <a href="http://www.sigmm.org/archive/MM/mm05/index.html" target="_blank"><h3>2005: Singapore</h3></a>
 <ul class="column">
+<div class="details" style="display:none">
+<p>The Multimedia 2005 Video Review Committee included the following individuals:<br />
+<br />
+Frank Nack (co-chair), CWI<br />
+Svetha Venkatesh (Co-chair), Curtin University<br />
+Annet Dekker, Netherlands Media Art Institute & Montevideo Time Based Arts<br />
+Alejandro Jaimes, FujiXerox<br />
+Andruid Kerne, Texas A&M University, Department of Computer Science</p>
+</div>
 <img class="video" id="2005-VD_1" src="acm-video-pages/dvs/images/videos2005/VD_1.jpg" width="96" height="72" />
 <img class="video" id="2005-VD_2" src="acm-video-pages/dvs/images/videos2005/VD_2.jpg" width="96" height="72" />
 <img class="video" id="2005-VD_3" src="acm-video-pages/dvs/images/videos2005/VD_3.jpg" width="96" height="72" />
@@ -202,6 +229,9 @@ Frank Nack, CWI</p>
 <li id="2006">
 <a href="http://www.sigmm.org/archive/MM/mm06/index.html" target="_blank"><h3>2006: Santa Barbara, CA, USA</h3></a>
 <ul class="column">
+<div class="details" style="display:none">
+<p>The Multimedia 2006 Video Track was chaired by Wuchi Feng, Portland State University, USA.</p>
+</div>
 <img class="video" id="2006-VD_1" src="acm-video-pages/dvs/images/videos2006/VD_1.jpg" width="96" height="72" />
 <img class="video" id="2006-VD_2" src="acm-video-pages/dvs/images/videos2006/VD_2.jpg" width="96" height="72" />
 <img class="video" id="2006-VD_3" src="acm-video-pages/dvs/images/videos2006/VD_3.jpg" width="96" height="72" />
@@ -298,11 +328,11 @@ Frank Nack, CWI</p>
 			</div><!--video-container--->
 			<!---<embed src="VD_1.mpg" height="280" width="360"/>--->
 			<div id="video-description">
-			<p><b>Video demonstration</b></p>
 			<p><a name="FullTextPdf" title="FullText Pdf" href=
 			<?php echo $row['paperlink']; ?>
 			target="_blank"><img src="Pop-up/pdf_logo.gif" alt="Pdf" class="fulltext_lnk" border="0"></a><?php echo $row['title']; ?></p>
 			<p><i><?php echo $row['authors']; ?></i></p> 
+			<p><br /><?php if (! $row['keywords'] == '') {echo "<b>Keywords: </b>" . $row['keywords'];} ?></p> 
 			</div>
 			</ul>
 			</li>
