@@ -100,16 +100,38 @@ function ACMBrowserApp(canvas){
       this.addListeners();
     }
    
-    this.drawScene4();
+    this.drawScene5();
 
     // Paint application
     this.getFloorLayer().paint(this.getContext());
   }
 
   this.drawScene1 = function(){
+    var video_layer = new Layer(this, this.getFloorLayer());
+
     // Draw spiral
-    var spiral = new Spiral();
+    var spiral = new Spiral(150, 0.1, 15, 0.08);
     this.getFloorLayer().add(spiral);
+
+    // Create obj1
+    var obj1 = new FilledRectangle('white', 'black', 1);
+    spiral.addElement(1,obj1);
+    video_layer.add(obj1);
+    // Create obj2
+    var obj2 = new FilledRectangle('white', 'black', 1);
+    spiral.addElement(2,obj2);    
+    video_layer.add(obj2);
+    // Create obj3
+    var obj3 = new FilledRectangle('white', 'black', 1);
+    spiral.addElement(3,obj3);
+    video_layer.add(obj3);
+    // Create obj4
+    var obj4 = new FilledRectangle('white', 'black', 1);
+    spiral.addElement(4,obj4);
+    video_layer.add(obj4);
+    
+    spiral.layout();
+
   }
 
   this.drawScene2 = function(){
@@ -194,6 +216,44 @@ function ACMBrowserApp(canvas){
         video.move(i*i*6,i*30);
         video_layer.add(video);
       }
+      video_layer.remove(loader);
+      floor_layer.repaint();
+    });
+  }
+  
+  this.drawScene5 = function(){
+    var floor_layer = this.getFloorLayer();
+    var connection_layer = new Layer(this, floor_layer);
+    var video_layer = new Layer(this, connection_layer);
+    
+    // Draw spiral
+    var spiral = new Spiral(150, 0.1, 15, 0.08);
+    floor_layer.add(spiral);
+
+    // Create loader
+    var loader = new ImageShape(
+      "http://jimpunk.net/Loading/wp-content/uploads/loading1.gif"
+    );
+    video_layer.add(loader);
+    loader.moveToCenter();
+    floor_layer.paint(this.getContext());
+
+    var video_collection = this.getVideoCollection();
+
+    fetchVideos(function(data){
+      var videos = data['videos'];
+      var video;
+      for(var i = 0; i < videos.length; i++){
+        video = new ACMVideo({
+          video_id: videos[i].video_id, 
+          screenshot: videos[i].screenshot,
+          year: videos[i].year
+        });
+        video_collection.addElement(videos[i].video_id, video);
+        video_layer.add(video);
+      }
+      spiral.addCollection(video_collection);
+      spiral.layout();
       video_layer.remove(loader);
       floor_layer.repaint();
     });
