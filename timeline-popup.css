@@ -1,0 +1,270 @@
+body { 
+    margin: 0; 
+    padding: 0 20px; 
+    font: 1em "Trebuchet MS", verdana, arial, sans-serif; 
+    font-size: 85%; 
+}
+
+div, ul, li {
+    zoom: 1;
+}
+
+p {
+
+	font-size: 80%;
+}
+
+ul ul,
+ul ul li {
+    zoom: 0;
+}
+
+#timeline {
+	margin: 20px;
+    height: 500px;
+    padding: 20px;
+    overflow-y:hidden;
+	overflow-x:hidden;
+    /*cursor: -moz-grab !important;*/ /* should this be applied with JS? */
+    border: 2px solid #aec4d0;
+	background: url(background.jpg);
+	background-size:100% 100%;
+	background-repeat:no-repeat;
+}
+
+.tl-events {
+    width: 6000px;
+    list-style: none;
+    margin: 0px;
+	height: 480px;
+}
+
+.tl-events li {
+    float: left;
+    width: 300px;
+    margin-right: 10px;
+	padding: 0px 25px 0px 25px;
+}
+
+.tl-events ul {
+    list-style: none;
+    margin: 0;
+    padding: 0px;
+}
+
+.tl-events a{text-decoration:none; color:white;}
+.tl-events a:hover{text-decoration:underline; }
+
+.tl-events ul li a {
+    text-decoration: none;
+    color: #000;
+    background: #D9E4FF;
+    border: 1px solid #D9E4FF;
+    -moz-border-radius: 4px;
+    display: block;
+    margin: 5px 2px;
+    padding: 2px;
+}
+
+h1 {
+    margin: 8px 0;
+}
+
+/* =Menu
+-------------------------------------------------------------- */
+
+.timeline-bar {
+    float: left;
+    margin-right: 10px;
+	margin-left: 25px;
+	padding: 0px 25px 0px 25px;
+}
+
+#access {
+	background: #222; /* Show a solid color for older browsers */
+	background: -moz-linear-gradient(#252525, #0a0a0a);
+	background: -o-linear-gradient(#252525, #0a0a0a);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#252525), to(#0a0a0a)); /* older webkit syntax */
+	background: -webkit-linear-gradient(#252525, #0a0a0a);
+	-webkit-box-shadow: rgba(0, 0, 0, 0.4) 0px 1px 2px;
+	-moz-box-shadow: rgba(0, 0, 0, 0.4) 0px 1px 2px;
+	box-shadow: rgba(0, 0, 0, 0.4) 0px 1px 2px;
+	clear: both;
+	display: block;
+	float: left;
+	margin: 0 auto 25px;
+	width: 100%;
+	height: 30px;
+}
+#access ul {
+	font-size: 13px;
+	list-style: none;
+	margin: 0 0 0 -0.8125em;
+	padding-left: 0;
+	color: white;
+}
+#access li {
+	float: left;
+	position: relative;
+	line-height: 250%;
+	text-decoration: none;
+	text-align: left;
+	vertical-align:middle;
+    width: 300px;
+    margin-right: 10px;
+	padding: 0px 25px 0px 25px;
+}
+	
+#access ul ul {
+	-moz-box-shadow: 0 3px 3px rgba(0,0,0,0.2);
+	-webkit-box-shadow: 0 3px 3px rgba(0,0,0,0.2);
+	box-shadow: 0 3px 3px rgba(0,0,0,0.2);
+	display: none;
+	float: left;
+	margin: 0;
+	position: absolute;
+	top: 3.333em;
+	left: 0;
+	width: 188px;
+	z-index: 99999;
+}
+#access ul ul ul {
+	left: 100%;
+	top: 0;
+}
+
+
+#access a{text-decoration:none; color:white;}
+#access a:hover{text-decoration:underline; }
+
+#access li:hover {
+	color: yellow;
+	height: 30px;
+}
+#access ul li:hover > ul {
+	display: block;
+}
+
+/* = Popup
+-------------------------------------------------------------- */
+
+#popupContact div, span, applet, object, iframe, h2, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em,
+font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, fieldset, form, label, legend, table, caption, tbody,
+ tfoot, thead, tr, th, td {
+border:0pt none;
+font-family:inherit;
+font-size:100%;
+font-style:inherit;
+font-weight:inherit;
+margin:0pt;
+padding:0pt;
+vertical-align:baseline;
+}
+
+#popupContact {
+background:#fff none repeat scroll 0%;
+line-height:1;
+font-size: 12px;
+font-family:arial,sans-serif;
+margin:0pt;
+height:100%;
+}
+
+#video-description p {
+line-height:150%;
+
+}
+
+.popupColumns  {
+    list-style: none;
+    margin: 0px;
+}
+
+.popupColumns li {
+    float: left;
+    margin-right: 10px;
+	padding: 0px 5px 0px 5px;
+}
+
+.video-column {
+border-right:1px dotted #D3D3D3;
+padding-right:2px;
+margin-right:20px;
+}
+
+.popupColumns ul {
+    list-style: none;
+    margin: 0;
+}
+
+.video-column {
+	width: 500px;
+}
+
+.related-column {
+	width: 400px;
+	padding: 25px;
+}
+
+#popupContact a {
+cursor: pointer;
+text-decoration:none;
+}
+
+#popupContact img {
+margin: 0px 5px;
+}
+
+#backgroundPopup{
+display:none;
+position:fixed;
+_position:absolute; /* hack for internet explorer 6*/
+height:100%;
+width:100%;
+top:0;
+left:0;
+background:#000000;
+border:1px solid #cecece;
+z-index:1;
+}
+
+#popupContact{
+display:none;
+position:fixed;
+_position:absolute; /* hack for internet explorer 6*/
+height:500px;
+width:1084px;
+background:#FFFFFF;
+border:2px solid #cecece;
+z-index:2;
+padding:12px;
+font-size:13px;
+}
+
+#popupContact h1{
+text-align:left;
+color:#1b4761;
+font-size:22px;
+font-weight:700;
+border-bottom:1px dotted #D3D3D3;
+padding-bottom:2px;
+margin-bottom:20px;
+}
+
+#popupContactClose{
+font-size:14px;
+line-height:14px;
+right:6px;
+top:4px;
+position:absolute;
+color:#6fa5fd;
+font-weight:700;
+display:block;
+}
+
+#button{
+text-align:center;
+margin:100px;
+}
+
+
