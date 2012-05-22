@@ -1,73 +1,3 @@
-<?php
-
-include("config.php");
-$con = mysql_connect($db_host,$username,$password) or 
-  die('Could not connect: ' . mysql_error());
-
-mysql_select_db("my_db", $con);
-
-// Comparison function
-function cmp($a, $b) {
-  if ( count($a) == count($b) ) {
-    return 0;
-  }
-  return ( count($a) > count($b) ? -1 : 1 );
-}
-
-  if (isset($_POST['id'])) {
-    $id = $_POST['id'];
-  } 
-
-  //gets title, authors, video, paper and year of selected video.
-  $res_meta_data = mysql_query(
-    sprintf(
-      "SELECT Metadata.title AS title, Metadata.authors AS authors, result.video_link AS videolink, result.paper_link AS paperlink, Metadata.year AS year, Metadata.Keywords AS keywords FROM Metadata, result WHERE Metadata.id = '%s' AND Metadata.id = result.id",
-      mysql_real_escape_string($id)
-    )
-  );
-  $row_meta_data = mysql_fetch_array($res_meta_data);
-
-  //Gets categories of selected video.
-  $res_cat = mysql_query(
-    sprintf(
-      "SELECT `category_id` FROM `Video-Categories` WHERE `video_id` = '%s'",
-      mysql_real_escape_string($id)
-    )
-  );
-  $categories = array();
-  while($row_cat = mysql_fetch_array($res_cat)){
-    $categories[] = $row_cat['category_id'];
-  }
-
-  //Gets related videos that have matching categories.
-  $related_videos = array();
-  foreach ($categories as $category)
-  {
-    $result_related = mysql_query(
-      sprintf(
-        "SELECT `video_id` AS related_video FROM `Video-Categories` WHERE `category_id` = '%s' AND NOT `video_id` = '%s'",
-        mysql_real_escape_string($category),
-        mysql_real_escape_string($id)
-      )
-    );
-
-    while($row_related = mysql_fetch_array($result_related))
-    {
-      if(!array_key_exists($row_related['related_video'], $related_videos))
-      {
-        $related_videos[$row_related['related_video'] ] = array($category);
-      }
-      else
-      {
-        array_push($related_videos[$row_related['related_video'] ],  $category);
-      }
-    }
-  }
-  // Sort the array according to number of matching categories.
-  uasort($related_videos, 'cmp');
-
-?>
-
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -81,11 +11,11 @@ function cmp($a, $b) {
   $(document).ready(function() {
     $('.video').dblclick(function() {
 		$.ajax({
-		url: location.href,
+		url: 'timeline-relatedvideos.php',
 		type: 'post',
 		data:{id: $(this).attr('id')},
 		success: function(value){
-		$('body').html(value);
+		$('#popup').html(value);
 		//centers popup
 		centerPopup();
 		//loads popup
@@ -115,7 +45,10 @@ function cmp($a, $b) {
 </head>
 <body>
 <div id="timeline">
-
+<div class="navigation">
+    <span class="arrow previous" id="previous"></span>
+    <span class="arrow next" id="next"></span>
+</div><!--navigation-->
 <ul class="tl-events" id="test">
 <li id="2001">
 <h3>1993-2001</h3>
@@ -134,7 +67,7 @@ function cmp($a, $b) {
 </ul>
 </li>
 <li id="2002">
-<a href="http://www.sigmm.org/archive/MM/mm02/index.htm" target="_blank"><h3>2002: Juan-les-Pins, France</h3></a>
+<h3><a href="http://www.sigmm.org/archive/MM/mm02/index.htm" target="_blank">2002: Juan-les-Pins, France</a></h3>
 <ul class="column">
 <div class="details" style="display:none">
 <p>The Multimedia 2002 Video Review Committee included the following individuals:<br />
@@ -182,7 +115,7 @@ Frank Nack, CWI</p>
 </li>
 
 <li id="2004">
-<a href="http://www.sigmm.org/archive/MM/mm04/index.htm" target="_blank"><h3>2004: New York, NY, USA</h3></a>
+<h3><a href="http://www.sigmm.org/archive/MM/mm04/index.htm" target="_blank">2004: New York, NY, USA</a></h3>
 <ul class="column">
 <div class="details" style="display:none">
 <p>The Multimedia 2004 Video Review Committee included the following individuals:<br />
@@ -207,7 +140,7 @@ Lynn Wilcox, FX Palo Alto Laboratory</p>
 </li>
 
 <li id="2005">
-<a href="http://www.sigmm.org/archive/MM/mm05/index.html" target="_blank"><h3>2005: Singapore</h3></a>
+<h3><a href="http://www.sigmm.org/archive/MM/mm05/index.html" target="_blank">2005: Singapore</a></h3>
 <ul class="column">
 <div class="details" style="display:none">
 <p>The Multimedia 2005 Video Review Committee included the following individuals:<br />
@@ -229,7 +162,7 @@ Andruid Kerne, Texas A&amp;M University, Department of Computer Science</p>
 </li>
 
 <li id="2006">
-<a href="http://www.sigmm.org/archive/MM/mm06/index.html" target="_blank"><h3>2006: Santa Barbara, CA, USA</h3></a>
+<h3><a href="http://www.sigmm.org/archive/MM/mm06/index.html" target="_blank">2006: Santa Barbara, CA, USA</a></h3>
 <ul class="column">
 <div class="details" style="display:none">
 <p>The Multimedia 2006 Video Track was chaired by Wuchi Feng, Portland State University, USA.</p>
@@ -245,25 +178,25 @@ Andruid Kerne, Texas A&amp;M University, Department of Computer Science</p>
 
 
 <li id="2007">
-<a href="http://mmc36.informatik.uni-augsburg.de/acmmm2007/" target="_blank"><h3>2007: Augsburg, Germany</h3></a>
+<h3><a href="http://mmc36.informatik.uni-augsburg.de/acmmm2007/" target="_blank">2007: Augsburg, Germany</a></h3>
 <ul class="column">
 </ul>
 </li>
 
 <li id="2008">
-<a href="http://www.sigmm.org/archive/MM/mm08/index.htm" target="_blank"><h3>2008: Vancouver, BC, Canada</h3></a>
+<h3><a href="http://www.sigmm.org/archive/MM/mm08/index.htm" target="_blank">2008: Vancouver, BC, Canada</a></h3>
 <ul class="column">
 </ul>
 </li>
 
 <li id="2009">
-<a href="http://www.sigmm.org/archive/MM/mm09/index.htm" target="_blank"><h3 style="color: black;">2009: Beijing, China</h3></a>
+<h3><a href="http://www.sigmm.org/archive/MM/mm09/index.htm" target="_blank">2009: Beijing, China</a></h3>
 <ul class="column">
 </ul>
 </li>
 
 <li id="2010">
-<a href="http://www.sigmm.org/archive/MM/mm10/www.acmmm10.org/index.html" target="_blank"><h3 style="color: white;">2010: Firenze, Italy</h3></a>
+<h3><a href="http://www.sigmm.org/archive/MM/mm10/www.acmmm10.org/index.html" target="_blank">2010: Firenze, Italy</a></h3>
 <ul class="column">
 </ul>
 </li>
@@ -283,6 +216,7 @@ Andruid Kerne, Texas A&amp;M University, Department of Computer Science</p>
 </ul>
 </li>
 </ul>
+
 
 <!---Tijdlijnbar--->
 <div id="t_footer">
@@ -313,65 +247,6 @@ Andruid Kerne, Texas A&amp;M University, Department of Computer Science</p>
 
 <!-- POPUP -->
 <div id="popup">
-	<div id="popupContact">
-		<a id="popupContactClose">x</a>
-		<h1><?php echo $row_meta_data['title'] . " (" . $row_meta_data['year'] . ")"; ?></h1>
-		<ul class="popupColumns">
-			<li class="video-column">
-			<h3>VIDEO</h3>
-			<ul class="column">
-			<div id="video-container">
-			<video width="360" height="280" controls="controls">
-			<source src= 
-  			<?php echo $row_meta_data['videolink']; ?>
-			type="video/mp4" />
-  			Your browser does not support the video tag.
-			</video>
-			</div><!--video-container--->
-			<!---<embed src="VD_1.mpg" height="280" width="360"/>--->
-			<div id="video-description">
-			<p><a name="FullTextPdf" title="FullText Pdf" href=
-			<?php echo $row_meta_data['paperlink']; ?>
-			target="_blank"><img src="images/pdf_logo.gif" alt="Pdf" class="fulltext_lnk" border="0"></a><?php echo $row_meta_data['title']; ?></p>
-			<p><i><?php echo $row_meta_data['authors']; ?></i></p> 
-			<p><br /><?php if (! $row_meta_data['keywords'] == '') {echo "<b>Keywords: </b>" . $row_meta_data['keywords'];} ?></p> 
-			</div>
-			</ul>
-			</li>
-		<li class="related-column">
-		<h3>RELATED VIDEOS</h3>
-		<ul class="column">
-		<ol id="relatedvideos">
-		<?php
-		if ( sizeof($row_related) > 0 )
-		{
-			$related_videos = array_slice($related_videos, 0, 20);
-			foreach($related_videos as $related_video => $value)
-			{
-		  	$res_related_video_meta = mysql_query(
-          sprintf(
-            "SELECT Metadata.title AS title, Metadata.authors AS authors, result.video_link AS videolink FROM Metadata, result WHERE Metadata.id = '%s' AND Metadata.id = result.id",
-            mysql_real_escape_string($related_video)
-          )
-        );
-
-        while($related_meta = mysql_fetch_array($res_related_video_meta))
-        {
-          echo "<li><a href=" . $related_meta['videolink'] . ">" . $related_meta['title'] . "</a></li>";
-        }
-			}
-		}
-		else
-		{
-			echo "<p>No related videos.</p>";
-		}
-		?>
-		</ol>
-		</ul>
-		</li>
-		</ul>
-	</div><!--popupContact-->
-	<div id="backgroundPopup"></div>
 </div><!--popup-->
 </body>
 </html>

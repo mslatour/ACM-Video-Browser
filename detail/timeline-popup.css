@@ -52,6 +52,8 @@ ul ul li {
     padding: 0px;
 }
 
+
+.tl-events h3{color: #B0B0B0;}
 .tl-events a{text-decoration:none; color:white;}
 .tl-events a:hover{text-decoration:underline; }
 
@@ -269,9 +271,22 @@ font-weight:700;
 display:block;
 }
 
-#button{
-text-align:center;
-margin:100px;
+
+
+#timeline .arrow{
+	height:86px;
+	width:60px;
+	position:absolute;
+	background:url('images/arrows.png') no-repeat;
+	top:50%;
+	margin-top:-43px;
+	cursor:pointer;
+	z-index:5000;
 }
 
+#timeline .previous{ background-position:left top;left:0;}
+#timeline .previous:hover{ background-position:left bottom;}
+
+#timeline .next{ background-position:right top;right:0;}
+#timeline .next:hover{ background-position:right bottom;}
 

@@ -1,74 +1,73 @@
 <?php
 
 include("config.php");
-$con = mysql_connect($db_host,$username,$password) or 
+$con = mysql_connect($db_host,$username,$password);
+
+if (!$con)
+  {
   die('Could not connect: ' . mysql_error());
+  }
 
 mysql_select_db("my_db", $con);
-
-// Comparison function
-function cmp($a, $b) {
-  if ( count($a) == count($b) ) {
-    return 0;
-  }
-  return ( count($a) > count($b) ? -1 : 1 );
-}
 
   if (isset($_POST['id'])) {
     $id = $_POST['id'];
   } 
+  else
+	{
+	$id = '2006-VD_1';
+}
 
-  //gets title, authors, video, paper and year of selected video.
-  $res_meta_data = mysql_query(
-    sprintf(
-      "SELECT Metadata.title AS title, Metadata.authors AS authors, result.video_link AS videolink, result.paper_link AS paperlink, Metadata.year AS year, Metadata.Keywords AS keywords FROM Metadata, result WHERE Metadata.id = '%s' AND Metadata.id = result.id",
-      mysql_real_escape_string($id)
-    )
-  );
-  $row_meta_data = mysql_fetch_array($res_meta_data);
 
-  //Gets categories of selected video.
-  $res_cat = mysql_query(
-    sprintf(
-      "SELECT `category_id` FROM `Video-Categories` WHERE `video_id` = '%s'",
-      mysql_real_escape_string($id)
-    )
-  );
-  $categories = array();
-  while($row_cat = mysql_fetch_array($res_cat)){
-    $categories[] = $row_cat['category_id'];
-  }
+//gets title, authors, video, paper and year of selected video.
+$result = mysql_query("SELECT Metadata.title AS title, Metadata.authors AS authors, result.video_link AS videolink, result.paper_link AS paperlink, Metadata.year AS year, Metadata.Keywords AS keywords FROM Metadata, result WHERE Metadata.id = '$id' AND Metadata.id = result.id");
+$row = array();
+$row = mysql_fetch_array($result);
 
-  //Gets related videos that have matching categories.
-  $related_videos = array();
-  foreach ($categories as $category)
+//Gets categories of selected video.
+$result2 = mysql_query("SELECT `category_id` FROM `Video-Categories` WHERE `video_id` = '$id' ");
+$row2 = array();
+$test2 = array();
+while($row2 = mysql_fetch_array($result2))
   {
-    $result_related = mysql_query(
-      sprintf(
-        "SELECT `video_id` AS related_video FROM `Video-Categories` WHERE `category_id` = '%s' AND NOT `video_id` = '%s'",
-        mysql_real_escape_string($category),
-        mysql_real_escape_string($id)
-      )
-    );
-
-    while($row_related = mysql_fetch_array($result_related))
-    {
-      if(!array_key_exists($row_related['related_video'], $related_videos))
-      {
-        $related_videos[$row_related['related_video'] ] = array($category);
-      }
-      else
-      {
-        array_push($related_videos[$row_related['related_video'] ],  $category);
-      }
-    }
+	array_push($test2,  $row2['category_id']);
   }
-  // Sort the array according to number of matching categories.
-  uasort($related_videos, 'cmp');
+
+//Gets related videos that have matching categories.
+$test3 = array();
+foreach ($test2 as $category)
+{
+$related_result = mysql_query("SELECT `video_id` AS related_video FROM `Video-Categories` WHERE `category_id` = '$category' AND NOT `video_id` = '$id' ");
+
+while($row3 = mysql_fetch_array($related_result))
+  	{
+	if(!array_key_exists($row3['related_video'], $test3))
+		{
+		$test3[$row3['related_video'] ] = array($category);
+		}
+	else
+		{
+		array_push($test3[$row3['related_video'] ],  $category);
+		}
+	}
+}
+
+// Comparison function
+function cmp($a, $b) {
+    if ( count($a) == count($b) ) {
+        return 0;
+    }
+    return ( count($a) > count($b) ) ? -1 : 1;
+}
+
+// Sort the array according to number of matching categories.
+uasort($test3, 'cmp');
+
 
 ?>
 
-<!DOCTYPE html>
+
+<!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
@@ -109,6 +108,8 @@ function cmp($a, $b) {
 		}
 	});
   });
+
+
 </script>
 <link rel="stylesheet" href="timeline-popup.css" type="text/css" media="screen" />
 
@@ -188,10 +189,10 @@ Frank Nack, CWI</p>
 <p>The Multimedia 2004 Video Review Committee included the following individuals:<br />
 <br />
 Frank Nack (chair), CWI<br />
-Annet Dekker, Netherlands Media Art Institute &amp; Montevideo Time Based Arts<br />
+Annet Dekker, Netherlands Media Art Institute & Montevideo Time Based Arts<br />
 Andreas Girgensohn, FX Palo Alto Laboratory<br />
 Alejandro Jaimes, FujiXerox<br />
-Andruid Kerne, Texas A&amp;M University, Department of Computer Science<br />
+Andruid Kerne, Texas A&M University, Department of Computer Science<br />
 Lynn Wilcox, FX Palo Alto Laboratory</p>
 </div>
 <img class="video" id="2004-VD_1" src="../acm-video-pages/dvs/images/videos2004/VD_1.jpg" width="96" height="72" />
@@ -214,9 +215,9 @@ Lynn Wilcox, FX Palo Alto Laboratory</p>
 <br />
 Frank Nack (co-chair), CWI<br />
 Svetha Venkatesh (Co-chair), Curtin University<br />
-Annet Dekker, Netherlands Media Art Institute &amp; Montevideo Time Based Arts<br />
+Annet Dekker, Netherlands Media Art Institute & Montevideo Time Based Arts<br />
 Alejandro Jaimes, FujiXerox<br />
-Andruid Kerne, Texas A&amp;M University, Department of Computer Science</p>
+Andruid Kerne, Texas A&M University, Department of Computer Science</p>
 </div>
 <img class="video" id="2005-VD_1" src="../acm-video-pages/dvs/images/videos2005/VD_1.jpg" width="96" height="72" />
 <img class="video" id="2005-VD_2" src="../acm-video-pages/dvs/images/videos2005/VD_2.jpg" width="96" height="72" />
@@ -311,54 +312,47 @@ Andruid Kerne, Texas A&amp;M University, Department of Computer Science</p>
 
     </div>
 
-<!-- POPUP -->
 <div id="popup">
 	<div id="popupContact">
 		<a id="popupContactClose">x</a>
-		<h1><?php echo $row_meta_data['title'] . " (" . $row_meta_data['year'] . ")"; ?></h1>
+		<h1><?php echo htmlentities($row['title']) . " (" . $row['year'] . ")"; ?></h1>
 		<ul class="popupColumns">
 			<li class="video-column">
-			<h3>VIDEO</h3>
 			<ul class="column">
+			<h3>VIDEO</h3>
 			<div id="video-container">
 			<video width="360" height="280" controls="controls">
 			<source src= 
-  			<?php echo $row_meta_data['videolink']; ?>
+  			<?php echo $row['videolink']; ?>
 			type="video/mp4" />
   			Your browser does not support the video tag.
 			</video>
 			</div><!--video-container--->
-			<!---<embed src="VD_1.mpg" height="280" width="360"/>--->
 			<div id="video-description">
-			<p><a name="FullTextPdf" title="FullText Pdf" href=
-			<?php echo $row_meta_data['paperlink']; ?>
-			target="_blank"><img src="images/pdf_logo.gif" alt="Pdf" class="fulltext_lnk" border="0"></a><?php echo $row_meta_data['title']; ?></p>
-			<p><i><?php echo $row_meta_data['authors']; ?></i></p> 
-			<p><br /><?php if (! $row_meta_data['keywords'] == '') {echo "<b>Keywords: </b>" . $row_meta_data['keywords'];} ?></p> 
+			<p><?php if (! $row['paperlink'] == '') {echo "<a name='FullTextPdf' title='FullText Pdf' href=" . $row['paperlink'] . " target='_blank'><img src='images/pdf_logo.gif' alt='Pdf' class='fulltext_lnk' border='0'>Pdf</a>";} ?></p>
+			<p><i><?php echo  "<b>Authors: </b>" . htmlentities($row['authors']); ?></i></p> 
+			<p><br /><?php if (! $row['keywords'] == '') {echo "<b>Keywords: </b>" . $row['keywords'];} ?></p> 
 			</div>
 			</ul>
 			</li>
 		<li class="related-column">
-		<h3>RELATED VIDEOS</h3>
 		<ul class="column">
+		<h3>RELATED VIDEOS</h3>
 		<ol id="relatedvideos">
 		<?php
-		if ( sizeof($row_related) > 0 )
+		if (isset($row3))
 		{
-			$related_videos = array_slice($related_videos, 0, 20);
-			foreach($related_videos as $related_video => $value)
+			//Picks the 20 most relevant videos. 
+			$test3 = array_slice($test3, 0, 20);
+			foreach($test3 as $related_video => $value)
 			{
-		  	$res_related_video_meta = mysql_query(
-          sprintf(
-            "SELECT Metadata.title AS title, Metadata.authors AS authors, result.video_link AS videolink FROM Metadata, result WHERE Metadata.id = '%s' AND Metadata.id = result.id",
-            mysql_real_escape_string($related_video)
-          )
-        );
+			$result4 = mysql_query("SELECT Metadata.title AS title, Metadata.authors AS authors, result.video_link AS videolink FROM Metadata, result WHERE Metadata.id = 				'$related_video' AND Metadata.id = result.id");
 
-        while($related_meta = mysql_fetch_array($res_related_video_meta))
-        {
-          echo "<li><a href=" . $related_meta['videolink'] . ">" . $related_meta['title'] . "</a></li>";
-        }
+			while($row4 = mysql_fetch_array($result4))
+			{
+			  echo "<li><a href=" . $row4['videolink'] . ">" . htmlentities($row4['title']) . "</a></li>";
+			}
+
 			}
 		}
 		else
@@ -370,9 +364,10 @@ Andruid Kerne, Texas A&amp;M University, Department of Computer Science</p>
 		</ul>
 		</li>
 		</ul>
-	</div><!--popupContact-->
+	</div><!--popupContact--->
 	<div id="backgroundPopup"></div>
-</div><!--popup-->
+</div>
+
 </body>
 </html>
 
