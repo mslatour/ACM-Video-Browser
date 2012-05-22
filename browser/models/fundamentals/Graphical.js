@@ -61,7 +61,7 @@ function Graphical(){
     }else{
       if( force || h > bh ){
         this.setWidth((w/h)*bh);
-        this.setHeigth(bh);
+        this.setHeight(bh);
       }
     }
   }
