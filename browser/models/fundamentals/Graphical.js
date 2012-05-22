@@ -40,6 +40,10 @@ function Graphical(){
 
   this.getRotation = function(){ return _rotate; }
   
+  this.getDrawRotation = function(){
+    return this.getRotation();
+  }
+  
   /**
    * Scale to fit inside box
    * int bw        - Width of box
@@ -114,7 +118,9 @@ function Graphical(){
 
   this.beforeDraw = function(context){
     context.save();
-  //  context.rotate(Math.PI*2*(_rotate/360));
+    context.translate(this.getX(),this.getY());
+    //context.rotate(Math.PI*2*(_rotate/360));
+    context.rotate(this.getDrawRotation());
   }
   this.draw = function(context){}
   this.afterDraw = function(context){

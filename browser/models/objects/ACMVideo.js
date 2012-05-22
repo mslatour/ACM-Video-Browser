@@ -16,7 +16,8 @@ function ACMVideo(data){
   var _screenshot = data.screenshot;
   var _year = data.year;
 
-  this.getVideoId = function(){ return _video_id; };
+  this.getId = this.getVideoId = function(){ return _video_id; };
+  this.getYear = function(){ return _year; };
 
   this.getScreenshot = function(){ return _screenshot; };
   this.setScreenshot = function(screenshot){

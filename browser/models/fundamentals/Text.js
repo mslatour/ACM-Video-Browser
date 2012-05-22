@@ -38,6 +38,14 @@ function Text(text, color, font){
 
   if(font != undefined) this.setFont(font);
 
+  this.getDrawRotation = function(){
+    if(this.getRotation() > (Math.PI/2)){
+      return this.getRotation()+Math.PI;
+    }else{
+      return this.getRotation();
+    }
+  }
+
   this.beforeDraw = function(context){
     _parent.beforeDraw(context);
     context.strokeStyle = this.getColor();
@@ -49,12 +57,12 @@ function Text(text, color, font){
   this.draw = function(context){
     context.save();
     context.lineWidth = 1;
-    context.strokeRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+    context.strokeRect(0, 0, this.getWidth(), this.getHeight());
     context.restore();
     context.fillText(
       this.getText(),
-      this.getX(),//(this.getWidth()/2),
-      this.getY()
+      0,
+      0
     )
   }
   

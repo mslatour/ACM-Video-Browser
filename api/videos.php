@@ -75,7 +75,7 @@ switch($_GET['mode']){
   default:
     ob_start();
     // Set queries
-    $q_get_videos = "SELECT * FROM `Videos` LIMIT 4";
+    $q_get_videos = "SELECT * FROM `result` WHERE year < 2005 ORDER BY name LIMIT 10";
 
     $result = mysql_query($q_get_videos);
 
@@ -83,9 +83,9 @@ switch($_GET['mode']){
 
     while( $row = mysql_fetch_assoc($result) ){
       $video = array();
-      $video['video_id'] = $row['video_id'];
-      $video['screenshot'] = "http://localhost/acm-data/acm-video-pages/dvs/images/videos2002/01kaufmann.jpg";
-      $video['year'] = $row['Year'];
+      $video['video_id'] = $row['id'];
+      $video['screenshot'] = "http://localhost/acm-data/".$row['key_frame'];
+      $video['year'] = (int)$row['year'];
       $videos[] = $video;
     }
 

@@ -39,4 +39,10 @@ function Collection(){
     }
     return ar;
   }
+
+  this.forall = function(callback){
+    for(var key in _elems){
+      callback(key, _elems[key]);
+    }
+  }
 }

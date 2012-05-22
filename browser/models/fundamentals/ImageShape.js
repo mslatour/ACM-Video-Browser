@@ -41,8 +41,8 @@ function ImageShape(imgOrSrc){
     _parent.draw(context);
     context.drawImage(
       this.getImage(),
-      this.getX(),
-      this.getY(),
+      0,
+      0,
       this.getWidth(),
       this.getHeight()
     );

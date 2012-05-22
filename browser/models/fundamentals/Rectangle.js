@@ -18,8 +18,8 @@ function Rectangle(stroke, lineWidth){
   this.draw = function(context){
     _parent.draw(context);
     context.rect(
-      this.getX(),
-      this.getY(),
+      0,
+      0,
       this.getWidth(),
       this.getHeight()
     );

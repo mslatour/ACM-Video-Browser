@@ -99,11 +99,9 @@ function ACMBrowserApp(canvas){
       this.initMouse();
       this.addListeners();
     }
-   
-    this.drawScene7();
-
-    // Paint application
-    this.getFloorLayer().paint(this.getContext());
+    
+    var view = new View1(this);
+    view.load();
   }
 
   this.drawScene1 = function(){
@@ -337,7 +335,7 @@ function ACMBrowserApp(canvas){
 
     // Create origin
     var origin = new Text(  
-      'A',
+      '2001',
       "red", 
       {
         "font-variant": "small-caps",
@@ -350,7 +348,7 @@ function ACMBrowserApp(canvas){
     
     // Create origin2
     var origin2 = new Text(  
-      'B',
+      '2002',
       "red", 
       {
         "font-variant": "small-caps",
@@ -363,7 +361,7 @@ function ACMBrowserApp(canvas){
     
     // Create origin3
     var origin3 = new Text(  
-      'C',
+      '2003',
       "red", 
       {
         "font-variant": "small-caps",
@@ -408,5 +406,11 @@ function ACMBrowserApp(canvas){
       floor_layer.add(new Connection(obj, origin3));
     }
     lm3.layout(origin3, Math.PI + origin3.getRotation());
+  }
+
+  this.drawScene8 = function(){
+    var rect = new FilledRectangle('red', 'black', 1);
+    rect.move(40,80);
+    this.getFloorLayer().add(rect);
   }
 }
