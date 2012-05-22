@@ -77,20 +77,50 @@ switch($_GET['mode']){
     // Set queries
     $q_get_videos_limited = "SELECT * FROM `result` ORDER BY RAND() LIMIT 20";
     $q_get_videos = "SELECT * FROM `result`";
+    $q_get_videos_scope_limited = "SELECT * FROM `result` WHERE time_category = %d ORDER BY RAND() LIMIT 20";
+    $q_get_videos_scope = "SELECT * FROM `result` WHERE time_category = %d";
     $q_get_time_categories = "SELECT * FROM TimeCategories";
+    $q_get_time_categories_scope = "SELECT * FROM TimeCategories WHERE id = %d";
 
     $tcats = array();
 
-    $result = mysql_query($q_get_time_categories);
+    if(isset($_GET['scope']) && intval($_GET['scope']) > 0){
+      $result = mysql_query(
+        sprintf(
+          $q_get_time_categories_scope,
+          mysql_real_escape_string($_GET['scope'])
+        )
+      );
+    }else{    
+      $result = mysql_query($q_get_time_categories);
+    }
     while($row = mysql_fetch_assoc($result)){
       $row['members'] = array();
       $tcats[$row['id']] = $row;
     }
 
     if($_GET['limited'] == 1){
-      $result = mysql_query($q_get_videos_limited);
+      if(isset($_GET['scope']) && intval($_GET['scope']) > 0){
+        $result = mysql_query(
+          sprintf(
+            $q_get_videos_scope_limited,
+            mysql_real_escape_string($_GET['scope'])
+          )
+        );
+      }else{
+        $result = mysql_query($q_get_videos_limited);
+      }
     }else{
-      $result = mysql_query($q_get_videos);
+      if(isset($_GET['scope']) && intval($_GET['scope']) > 0){
+        $result = mysql_query(
+          sprintf(
+            $q_get_videos_scope,
+            mysql_real_escape_string($_GET['scope'])
+          )
+        );
+      }else{
+        $result = mysql_query($q_get_videos);
+      }
     }
 
     $videos = array();
