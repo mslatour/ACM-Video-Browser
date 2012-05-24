@@ -36,20 +36,30 @@ ul ul li {
     width: 6000px;
     list-style: none;
     margin: 0px;
-	height: 480px;
+  	height: 480px;
 }
 
 .tl-events li {
     float: left;
-    width: 300px;
     margin-right: 10px;
-	padding: 0px 25px 0px 25px;
+	  padding: 0px 25px 0px 25px;
 }
 
 .tl-events ul {
     list-style: none;
     margin: 0;
     padding: 0px;
+}
+
+.tl-events .column {
+    float: left;
+    display: block;
+    width: 100px;
+}
+
+.tl-events .column li {
+    list-style: none;
+	  padding: 0px;
 }
 
 
@@ -289,4 +299,5 @@ display:block;
 
 #timeline .next{ background-position:right top;right:0;}
 #timeline .next:hover{ background-position:right bottom;}
+
 
