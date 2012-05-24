@@ -66,7 +66,7 @@ switch($_GET['mode']){
     break;
   case "details":
     if(isset($_GET['id'])){
-      // popup ...
+        // popup ...
     }else{
 
     }
@@ -75,22 +75,65 @@ switch($_GET['mode']){
   default:
     ob_start();
     // Set queries
-    $q_get_videos = "SELECT * FROM `result` WHERE year < 2005 ORDER BY name LIMIT 10";
+    $q_get_videos_limited = "SELECT * FROM `result` ORDER BY RAND() LIMIT 20";
+    $q_get_videos = "SELECT * FROM `result`";
+    $q_get_videos_scope_limited = "SELECT * FROM `result` WHERE time_category = %d ORDER BY RAND() LIMIT 20";
+    $q_get_videos_scope = "SELECT * FROM `result` WHERE time_category = %d";
+    $q_get_time_categories = "SELECT * FROM TimeCategories";
+    $q_get_time_categories_scope = "SELECT * FROM TimeCategories WHERE id = %d";
 
-    $result = mysql_query($q_get_videos);
+    $tcats = array();
+
+    if(isset($_GET['scope']) && intval($_GET['scope']) > 0){
+      $result = mysql_query(
+        sprintf(
+          $q_get_time_categories_scope,
+          mysql_real_escape_string($_GET['scope'])
+        )
+      );
+    }else{    
+      $result = mysql_query($q_get_time_categories);
+    }
+    while($row = mysql_fetch_assoc($result)){
+      $row['members'] = array();
+      $tcats[$row['id']] = $row;
+    }
+
+    if($_GET['limited'] == 1){
+      if(isset($_GET['scope']) && intval($_GET['scope']) > 0){
+        $result = mysql_query(
+          sprintf(
+            $q_get_videos_scope_limited,
+            mysql_real_escape_string($_GET['scope'])
+          )
+        );
+      }else{
+        $result = mysql_query($q_get_videos_limited);
+      }
+    }else{
+      if(isset($_GET['scope']) && intval($_GET['scope']) > 0){
+        $result = mysql_query(
+          sprintf(
+            $q_get_videos_scope,
+            mysql_real_escape_string($_GET['scope'])
+          )
+        );
+      }else{
+        $result = mysql_query($q_get_videos);
+      }
+    }
 
     $videos = array();
 
     while( $row = mysql_fetch_assoc($result) ){
       $video = array();
-      $video['video_id'] = $row['id'];
-      $video['screenshot'] = "http://localhost/acm-data/".$row['key_frame'];
-      $video['year'] = (int)$row['year'];
-      $videos[] = $video;
+      $video['id'] = $row['id'];
+      $video['key_frame'] = "../".$row['key_frame'];
+      $tcats[$row['time_category']]["members"][] = $video;
     }
 
     ob_end_clean();
-    echo json_encode(array("videos"=>$videos));
+    echo json_encode($tcats);
     break;
 }
 ?>
