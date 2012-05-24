@@ -68,7 +68,7 @@ $(document).ready(function() {
 $(document).ready(function(){
 	var slides = $('#timeline ul li');
 	var slideAantal = slides.length;
-	var slideBreedte = 300;
+	var slideBreedte = 350;
 	var slideHuidig = 0;
 
 	// Zorg ervoor dat de totale breedte van #slide overeenkomt met de breedte van het aantal slides
