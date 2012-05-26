@@ -1,11 +1,11 @@
-function CircleFragment(origin, fragment, isolines, min, max){
-  var delta = Math.floor((max-min)/isolines.length);
+function CircleFragment(origin, fragment, isolines, min, max, offset){
+  var delta = Math.floor((max-min)/(isolines.length-1));
   var bins = {};
-  var width, radius, offset = 5;
+  var width, radius;
   // Create bins
   for(var i = 0; i < isolines.length; i++){
     radius = min+(i*delta);
-    width = radius*2*Math.PI*fragment;
+    width = radius*2*Math.PI*fragment - offset;
     if(i == 0){
       bins[isolines[i]] = {
         "bin" : new CircleFragmentBin(width, offset),
@@ -17,6 +17,13 @@ function CircleFragment(origin, fragment, isolines, min, max){
         "lm" : new CircleFitting(offset, fragment,  min+(i*delta))
       }
     }
+  }
+
+  this.getPointOnIsoline = function(isoline, angle){
+    return new GraphicalCoordinate(
+      origin.getX() + radius * Math.cos(angle),
+      origin.getY() + radius * Math.sin(angle)
+    );
   }
 
   this.addElement = function(key, elem){
@@ -32,11 +39,11 @@ function CircleFragment(origin, fragment, isolines, min, max){
     lbin.addElement(key, elem);
   }
 
-  this.layout = function(){
+  this.layout = function(angle){
     for(var isoline in bins){
       bins[isoline].lm.removeAll();
       bins[isoline].lm.addCollection(bins[isoline].bin);
-      bins[isoline].lm.layout(origin, 0);
+      bins[isoline].lm.layout(origin, angle);
     }
   }
 }

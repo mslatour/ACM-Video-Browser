@@ -1,20 +1,20 @@
 function Arc(radius, from, to, stroke, lineWidth){
   var _self = inherit(this, new Shape());
   var _parent = _self._parent;
-  this.className = "Angle";
+  this.className = "Arc";
   
   var _radius = radius;
   var _fromAngle = from;
   var _toAngle = to;
 
   this.getRadius = function(){ return _radius; };
-  this.setRadius = fucntion(radius){ _radius = radius; };
+  this.setRadius = function(radius){ _radius = radius; };
 
   this.getFromAngle = function(){ return _fromAngle; };
-  this.setFromAngle = fucntion(angle){ _fromAngle = angle; };
+  this.setFromAngle = function(angle){ _fromAngle = angle; };
   
   this.getToAngle = function(){ return _toAngle; };
-  this.setToAngle = fucntion(angle){ _toAngle = angle; };
+  this.setToAngle = function(angle){ _toAngle = angle; };
 
   var _stroke = stroke;
   var _lineWidth = lineWidth;
@@ -37,7 +37,7 @@ function Arc(radius, from, to, stroke, lineWidth){
       this.getFromAngle(),
       this.getToAngle(),
       false
-    ),
+    );
     context.lineWidth = this.getLineWidth();
     context.strokeStyle = this.getStroke();
     context.stroke();

@@ -9,23 +9,23 @@ function CircleFitting(offset, fragment, radius){
 
   this.layout = function(origin, angle){
     var elements = this.getElements();
-    if( radius == undefined ){
-      var width = 30;
-      var num = 0;
-      for(var id in elements){
-        width += elements[id].element.getWidth() + offset;
-        num++;
-      }
-
-      radius = Math.ceil(((width / fragment) / (2* Math.PI)));
-    }else{
-      var num = this.getNumberOfElements();
+    var width = 0;
+    var num = 0;
+    for(var id in elements){
+      width += elements[id].element.getWidth() + offset;
+      num++;
     }
-    angle += fragment*Math.PI;
+
+    if( radius == undefined ){
+      radius = Math.ceil(((width / fragment) / (2* Math.PI)));
+    }
+   
+    var correction = (width/(2*(num-1)*width))*(fragment*2*Math.PI);
+    angle += correction;
     var x, y, i = 1;
     var startx = origin.getX();
     var starty = origin.getY();
-    var increment = (2*Math.PI*fragment)/(num-1);
+    var increment = ((2*Math.PI*fragment)-2*correction)/(num-1);
     for (var id in elements){
       x = startx + radius * Math.cos(angle);
       y = starty + radius * Math.sin(angle);

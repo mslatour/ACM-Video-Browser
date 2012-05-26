@@ -5,7 +5,7 @@ function CircleFragmentBin(maxWidth, offset, prevBin){
   if(prevBin != undefined) this.setPrevBin(prevBin);
 
   // Total used width;
-  var _width = 0;
+  var _width = offset;
 
   this.addElement = function(key, elem){
     if( _width + elem.getWidth() + offset <= maxWidth ){
