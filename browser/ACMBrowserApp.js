@@ -100,7 +100,7 @@ function ACMBrowserApp(canvas){
       this.addListeners();
     }
     
-    var view = new View1(this);
+    var view = new CircleTestView(this);
     view.load();
   }
 

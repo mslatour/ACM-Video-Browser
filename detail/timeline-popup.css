@@ -20,9 +20,9 @@ ul ul li {
 }
 
 #timeline {
-	margin: 20px;
+	margin: 0px 20px;
     height: 500px;
-    padding: 20px;
+    padding: 0px 20px;
     overflow-y:hidden;
 	overflow-x:hidden;
     /*cursor: -moz-grab !important;*/ /* should this be applied with JS? */
@@ -30,6 +30,12 @@ ul ul li {
 	background: url(images/background.jpg);
 	background-size:100% 100%;
 	background-repeat:no-repeat;
+}
+
+#t_header {
+	margin: 0px 20px;
+    padding: 0px 20px;
+    /*cursor: -moz-grab !important;*/ /* should this be applied with JS? */
 }
 
 .tl-events {
@@ -251,8 +257,8 @@ z-index:1;
 display: none;
 position:fixed;
 _position:absolute; /* hack for internet explorer 6*/
-height:500px;
-width:1084px;
+height:580px;
+width:1100px;
 background:#FFFFFF;
 border:2px solid #cecece;
 z-index:2;
