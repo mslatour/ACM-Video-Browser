@@ -8,12 +8,12 @@ function CircleFragment(origin, fragment, isolines, min, max){
     width = radius*2*Math.PI*fragment;
     if(i == 0){
       bins[isolines[i]] = {
-        "bin" : new CircleFragmentBin(width),
+        "bin" : new CircleFragmentBin(width, offset),
         "lm" : new CircleFitting(offset, fragment,  min+(i*delta))
       }
     }else{
       bins[isolines[i]] = {
-        "bin" : new CircleFragmentBin(width, bins[isolines[i-1]].bin),
+        "bin" : new CircleFragmentBin(width, offset, bins[isolines[i-1]].bin),
         "lm" : new CircleFitting(offset, fragment,  min+(i*delta))
       }
     }
@@ -34,6 +34,8 @@ function CircleFragment(origin, fragment, isolines, min, max){
 
   this.layout = function(){
     for(var isoline in bins){
+      bins[isoline].lm.removeAll();
+      bins[isoline].lm.addCollection(bins[isoline].bin);
       bins[isoline].lm.layout(origin, 0);
     }
   }

@@ -17,23 +17,27 @@ function LinkedBin(max, prevBin){
 
   this.addElement = function(key, elem){
     if(! _parent.addElement(key, elem) ){
-      if( this.getNextBin() != null ){
-        if(! this.getNextBin().addElement(key, elem) ){
-          if( this.getPrevBin() != null ){
-            return this.getPrevBin().addElement(key, elem);
-          }else{
-            return false;
-          }
-        }else{
-          return true;
-        }
-      }else if( this.getPrevBin() != null){
-        return this.getPrevBin().addElement(key, elem);
-      }else{
-        return false;
-      }
+      return this.readdElement(key, elem);
     }else{
       return true;
+    }
+  }
+
+  this.readdElement = function(key, elem){
+    if( this.getNextBin() != null ){
+      if(! this.getNextBin().addElement(key, elem) ){
+        if( this.getPrevBin() != null ){
+          return this.getPrevBin().addElement(key, elem);
+        }else{
+          return false;
+        }
+      }else{
+        return true;
+      }
+    }else if( this.getPrevBin() != null){
+      return this.getPrevBin().addElement(key, elem);
+    }else{
+      return false;
     }
   }
 }

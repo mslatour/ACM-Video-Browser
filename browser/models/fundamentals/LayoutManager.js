@@ -37,6 +37,10 @@ function LayoutManager(){
     delete elements[element];
   }
 
+  this.removeAll = function(){
+    elements = {};
+  }
+
   this.setElements = function(elems){
     elements = elems;
   }

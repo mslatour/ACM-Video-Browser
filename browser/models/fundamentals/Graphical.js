@@ -13,9 +13,9 @@ function Graphical(){
 
   var _layer = null;
   
-  this.getX = function(){ return _x; }
+  this.getX = function(){ return Math.round(_x); }
   this.setX = function(x){ _x = x; }
-  this.getY = function(){ return _y; }
+  this.getY = function(){ return Math.round(_y); }
   this.setY = function(y){ _y = y; }
 
   this.getHeight = function(){ return _height; };
