@@ -6,14 +6,6 @@ $con = mysql_connect($db_host,$username,$password) or
 
 mysql_select_db("my_db", $con);
 
-// Comparison function
-function cmp($a, $b) {
-  if ( count($a) == count($b) ) {
-    return 0;
-  }
-  return ( count($a) > count($b) ? -1 : 1 );
-}
-
   if (isset($_POST['id'])) {
     $id = $_POST['id'];
   } 
@@ -213,14 +205,14 @@ arsort($eindscore);
 			{
 		  	$res_related_video_meta = mysql_query(
           sprintf(
-            "SELECT Metadata.title AS title, Metadata.authors AS authors, result.video_link AS videolink FROM Metadata, result WHERE Metadata.id = '%s' AND Metadata.id = result.id",
+            "SELECT Metadata.title AS title, Metadata.authors AS authors, result.video_link AS videolink, Metadata.year AS year FROM Metadata, result WHERE Metadata.id = '%s' AND Metadata.id = result.id",
             mysql_real_escape_string($related_video)
           )
         );
 
         while($related_meta = mysql_fetch_array($res_related_video_meta))
         {
-          echo "<li><a href=" . $related_meta['videolink'] . ">" . htmlentities($related_meta['title']) . "</a></li>";
+          echo "<li><a href=" . $related_meta['videolink'] . ">" . htmlentities($related_meta['title']) . " (<b>" . $related_meta['year'] . "</b>)</a></li>";
         }
 			}
 		}
