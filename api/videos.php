@@ -16,6 +16,8 @@ $q_get_terms = "SELECT term_id FROM `Video-Terms` WHERE video_id =  '%s'";
 $q_get_related_videos_terms = "SELECT `video_id` AS related_video FROM `Video-Terms` WHERE `term_id` = '%s' AND NOT `video_id` = '%s'";
 $q_get_keywords = "SELECT `keyword` FROM `Video-Keywords` WHERE `video_id` = '%s' ";
 $q_get_related_videos_keywords = "SELECT `video_id` AS related_video FROM `Video-Keywords` WHERE `keyword` = '%s' AND NOT `video_id` = '%s' AND NOT `keyword` = '' ";
+$q_get_video_details = "SELECT * FROM `result` WHERE `id` = '%s'";
+$q_get_time_details = "SELECT * FROM `TimeCategories` WHERE `id` = '%s'";
 
 if(!isset($_GET['mode'])) $_GET['mode'] = 'list';
 
@@ -24,8 +26,8 @@ switch($_GET['mode']){
     if(isset($_GET['id'])){
       $id = $_GET['id'];
 
-      // Final result structure;
-      $result = array();
+      // Videos container;
+      $videos = array();
 
       ob_start();
       
@@ -59,23 +61,23 @@ switch($_GET['mode']){
           // Add related video and its categories to the end result
           if(
             ! array_key_exists($row_related_by_category['related_video'], $result) ||
-            ! array_key_exists("categories", $result[$row_related_by_category['related_video']])
+            ! array_key_exists("categories", $videos[$row_related_by_category['related_video']])
           ){
-            $result[$row_related_by_category['related_video']]["categories"] = array($row_related_by_category['related_category']);
+            $videos[$row_related_by_category['related_video']]["categories"] = array($row_related_by_category['related_category']);
           }else{
-            $result[$row_related_by_category['related_video']]["categories"][] = $row_related_by_category['related_category'];
+            $videos[$row_related_by_category['related_video']]["categories"][] = $row_related_by_category['related_category'];
           }
           // Update score of the related video
-          if( ! array_key_exists("score", $result[$row_related_by_category['related_video']]) ){
-            $result[$row_related_by_category["related_video"]]["score"] = $row_related_by_category['related_video_weight'];
+          if( ! array_key_exists("score", $videos[$row_related_by_category['related_video']]) ){
+            $videos[$row_related_by_category["related_video"]]["score"] = $row_related_by_category['related_video_weight'];
           }else{
-            $result[$row_related_by_category["related_video"]]["score"] += $row_related_by_category['related_video_weight'];
+            $videos[$row_related_by_category["related_video"]]["score"] += $row_related_by_category['related_video_weight'];
           }
           // Add bonus when leafs match, else add 0.5
           if( $row_related_by_category['related_category'] == $row_cat['category_id']){
-            $result[$row_related_by_category["related_video"]]["score"] += $w * $row_cat['selected_video_weight'];
+            $videos[$row_related_by_category["related_video"]]["score"] += $w * $row_cat['selected_video_weight'];
           }else{
-            $result[$row_related_by_category["related_video"]]["score"] += 0.5;
+            $videos[$row_related_by_category["related_video"]]["score"] += 0.5;
           }
         }
       }
@@ -106,17 +108,17 @@ switch($_GET['mode']){
           // Add related video and its keywords to the end result
           if(
             ! array_key_exists($row_related_by_term['related_video'], $result) ||
-            ! array_key_exists("terms", $result[$row_related_by_term['related_video']])
+            ! array_key_exists("terms", $videos[$row_related_by_term['related_video']])
           ){
-            $result[$row_related_by_term['related_video']]["terms"] = array($row_term['term_id']);
+            $videos[$row_related_by_term['related_video']]["terms"] = array($row_term['term_id']);
           }else{
-            $result[$row_related_by_term['related_video']]["terms"][] = $row_term['term_id'];
+            $videos[$row_related_by_term['related_video']]["terms"][] = $row_term['term_id'];
           }
           // Update score of the related video
-          if( ! array_key_exists("score", $result[$row_related_by_term['related_video']]) ){
-            $result[$row_related_by_term["related_video"]]["score"] = $term_weight;
+          if( ! array_key_exists("score", $videos[$row_related_by_term['related_video']]) ){
+            $videos[$row_related_by_term["related_video"]]["score"] = $term_weight;
           }else{
-            $result[$row_related_by_term["related_video"]]["score"] += $term_weight;
+            $videos[$row_related_by_term["related_video"]]["score"] += $term_weight;
           }
 
         }
@@ -150,27 +152,49 @@ switch($_GET['mode']){
           // Add related video and its keywords to the end result
           if(
             ! array_key_exists($row_related_by_keyword['related_video'], $result) ||
-            ! array_key_exists("keywords", $result[$row_related_by_keyword['related_video']])
+            ! array_key_exists("keywords", $videos[$row_related_by_keyword['related_video']])
           ){
-            $result[$row_related_by_keyword['related_video']]["keywords"] = array(trim($row_keywords['keyword']));
+            $videos[$row_related_by_keyword['related_video']]["keywords"] = array(trim($row_keywords['keyword']));
           }else{
-            $result[$row_related_by_keyword['related_video']]["keywords"][] = trim($row_keywords['keyword']);
+            $videos[$row_related_by_keyword['related_video']]["keywords"][] = trim($row_keywords['keyword']);
           }
           // Update score of the related video
-          if( ! array_key_exists("score", $result[$row_related_by_keyword['related_video']]) ){
-            $result[$row_related_by_keyword["related_video"]]["score"] = $keyword_weight;
+          if( ! array_key_exists("score", $videos[$row_related_by_keyword['related_video']]) ){
+            $videos[$row_related_by_keyword["related_video"]]["score"] = $keyword_weight;
           }else{
-            $result[$row_related_by_keyword["related_video"]]["score"] += $keyword_weight;
+            $videos[$row_related_by_keyword["related_video"]]["score"] += $keyword_weight;
           }
         }
       }
 
-      //The array with scores is sorted in reverse order, so the related video with the highest score (and thus the biggest match with the selected video) ends at the top.
-//      arsort($endscore);
-
+      $result = array();
+      /***********************************************
+       * Add additional information about each video *
+       ***********************************************/
+      foreach($videos as $video=>$data){
+        $res_video_detail = mysql_query(
+          sprintf(
+            $q_get_video_details,
+            mysql_real_escape_string($video)
+          )
+        );
+        $row_video_detail = mysql_fetch_assoc($res_video_detail);
+        $videos[$video]["id"] = $video;
+        $videos[$video]["key_frame"] = $row_video_detail["key_frame"];
+        if(!array_key_exists($row_video_detail['time_category'], $result)){
+          $res_time_detail = mysql_query(
+            sprintf(
+              $q_get_time_details,
+              mysql_real_escape_string($row_video_detail['time_category'])
+            )
+          );
+          $result[$row_video_detail['time_category']] = mysql_fetch_assoc($res_time_detail);
+          $result[$row_video_detail['time_category']]["members"] = array($videos[$video]);
+        }else{
+          $result[$row_video_detail['time_category']]["members"][] = $videos[$video];
+        }
+      }
       ob_end_clean();
-      //print_r($categories);
-      //echo json_encode($endscore);
       echo json_encode($result);
     }
     break;
