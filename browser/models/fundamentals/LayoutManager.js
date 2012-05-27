@@ -19,9 +19,9 @@ function LayoutManager(){
     elements[id] = struct;
   }
 
-  this.addCollection = function(collection, rotate){
+  this.addCollection = function(collection, rotate, centered){
     for(var key in collection.getRawCollection()){
-      this.addElement(key, collection.getElement(key), rotate);
+      this.addElement(key, collection.getElement(key), rotate, centered);
     }
   }
 

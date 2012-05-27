@@ -9,7 +9,7 @@ function CircleFitting(offset, fragment, radius){
 
   this.layout = function(origin, angle){
     var elements = this.getElements();
-    var width = 0;
+    var width = offset;
     var num = 0;
     for(var id in elements){
       width += elements[id].element.getWidth() + offset;
@@ -19,19 +19,22 @@ function CircleFitting(offset, fragment, radius){
     if( radius == undefined ){
       radius = Math.ceil(((width / fragment) / (2* Math.PI)));
     }
+
+    var totalWidth = radius*2*Math.PI*fragment;
    
-    var correction = (width/(2*(num-1)*width))*(fragment*2*Math.PI);
-    angle += correction;
-    var x, y, i = 1;
-    var startx = origin.getX();
-    var starty = origin.getY();
-    var increment = ((2*Math.PI*fragment)-2*correction)/(num-1);
-    for (var id in elements){
-      x = startx + radius * Math.cos(angle);
-      y = starty + radius * Math.sin(angle);
-      this.layoutElement(id, x, y);
-      angle += increment;
-      i++;
+    if(num > 0){
+      var increment = (totalWidth - width)/num;
+      angle += (increment+2*offset)/radius;
+      var x, y, i = 1;
+      var startx = origin.getX();
+      var starty = origin.getY();
+      for (var id in elements){
+        x = startx + radius * Math.cos(angle);
+        y = starty + radius * Math.sin(angle);
+        this.layoutElement(id, x, y);
+        angle += (increment+offset+elements[id].element.getWidth())/radius;
+        i++;
+      }
     }
   }
 }

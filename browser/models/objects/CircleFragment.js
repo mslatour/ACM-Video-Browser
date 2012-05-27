@@ -42,7 +42,7 @@ function CircleFragment(origin, fragment, isolines, min, max, offset){
   this.layout = function(angle){
     for(var isoline in bins){
       bins[isoline].lm.removeAll();
-      bins[isoline].lm.addCollection(bins[isoline].bin);
+      bins[isoline].lm.addCollection(bins[isoline].bin, false, true);
       bins[isoline].lm.layout(origin, angle);
     }
   }
