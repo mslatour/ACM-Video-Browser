@@ -200,9 +200,20 @@ switch($_GET['mode']){
     break;
   case "details":
     if(isset($_GET['id'])){
-      // popup ...
-    }else{
-
+      $res_details = mysql_query(
+        sprintf(
+          $q_get_video_details,
+          mysql_real_escape_string($_GET['id'])
+        )
+      );
+      $row_details = mysql_fetch_assoc($res_details);
+      echo json_encode(
+        array(
+          "id"=>$row_details['id'], 
+          "key_frame"=>$row_details['key_frame'],
+          "time_category"=>$row_details['time_category']
+        )
+      );
     }
     break;
   case "list":
