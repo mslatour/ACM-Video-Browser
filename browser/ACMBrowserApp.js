@@ -100,8 +100,8 @@ function ACMBrowserApp(canvas){
       this.addListeners();
     }
     
-    var view = new CircleTestView(this);
-    view.load();
+    var view = new RelatednessCircleView(this);
+    view.load("2006-VD_2");
   }
 
   this.drawScene1 = function(){
