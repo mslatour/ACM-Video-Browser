@@ -2,7 +2,7 @@
 // Connection's Parameters, set your sql settings here
 $db_host="localhost";
 $db_name="ACM-SigMM";
-$username="ACM";
+$username="acm";
 $password="video";
 $db_con=mysql_connect($db_host,$username,$password);
 $connection_string=mysql_select_db($db_name);
