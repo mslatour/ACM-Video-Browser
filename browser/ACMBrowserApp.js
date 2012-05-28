@@ -101,7 +101,7 @@ function ACMBrowserApp(canvas){
     }
     
     var view = new RelatednessCircleView(this);
-    view.load("2006-VD_2");
+    view.load("2006-VD_4");
   }
 
   this.drawScene1 = function(){

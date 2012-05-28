@@ -69,7 +69,7 @@ function RelatednessCircleView(app){
           "year": data[time].members[i].year,
           "score": data[time].members[i].score
         });
-        video.scaleToBox(40,40);
+        video.scaleToBox(30,30);
         layer.add(video);
         _frags[time].addElement(video.getId(), video);
       }
