@@ -67,8 +67,8 @@
         this.scrollLeft = $(this).data('scrollLeft') + $(this).data('x') - event.clientX;
       }
     // Mousewheel does not always seem to work - SL
-    // }).mousewheel(function (event, delta) {
-    //     this.scrollLeft -= (delta * 30);
+    }).mousewheel(function (event, delta) {
+         this.scrollLeft -= (delta * 30);
     }).css({
         'overflow' : 'hidden',
         'cursor' : '-moz-grab'
@@ -211,7 +211,6 @@
       document.getElementById("test"),
       document.getElementById("menu-navigation-menu")
     );
-  });
 
 //CODE TO MAKE NAVIGATION ARROWS WORK
 	var slides = $('.tl-events li');
@@ -240,7 +239,7 @@
 
 	function navigation(slideCurrent) {
 		//Hide previous-arrow when at the end.
-		if ( slideAantal - 1 == slideCurrent) {
+		if ( slideTotal - 1 == slideCurrent) {
 			$('#next').hide()
 		}
 		else {
@@ -258,7 +257,7 @@
 
 	// Zorg ervoor dat de 'vorige' knop wordt weggelaten wanneer de pagina wordt geladen
 	navigation(slideCurrent);
-
+  });
 </script>
 <link rel="stylesheet" href="timeline-popup.css" type="text/css" media="screen" />
 
