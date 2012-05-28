@@ -85,17 +85,10 @@ function RelatednessCircleView(app){
         data[time].name_short
       );
       layer.add(timelabel);
-      if(text_point.getX() >= origin.getX()){
-        timelabel.move(
-          text_point.getX(),
-          text_point.getY()
-        );
-      }else{
-        timelabel.move(
-          text_point.getX() - timelabel.getWidth(),
-          text_point.getY()
-        );
-      }
+      timelabel.move(
+        text_point.getX() - (text_point.getX() < origin.getX() ? timelabel.getWidth() : 0 ),
+        text_point.getY() - (text_point.getY() < origin.getY() ? 10 : 0 )
+      );
       _frags[time].layout(offsetAngle);
       offsetAngle += 2*Math.PI*(data[time].members.length/num);
     }

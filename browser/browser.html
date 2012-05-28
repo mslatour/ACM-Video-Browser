@@ -58,6 +58,8 @@ window.onload = function(){
     document.getElementById("canvas")
   );
   App.run();
+  var view = new RelatednessCircleView(App);
+  view.load("2006-VD_4");
 };
 </script>
 <canvas id="canvas" width="600" height="600" style='border: thin solid black;'></canvas>
