@@ -106,16 +106,17 @@
     **/
 
 	$('.video').dblclick(function() {
+      var id = $(this).attr('id');
       $.ajax({
         url: 'timeline-relatedvideos.php',
         type: 'post',
-        data:{id: $(this).attr('id')},
+        data:{id: id},
         success: function(value){
           $('#popup').html(value);
           //centers popup
           centerPopup();
           //loads popup
-          loadPopup();
+          loadPopup(id);
         }
       });
 	});		

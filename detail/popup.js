@@ -10,7 +10,7 @@
 var popupStatus = 0;
 
 //loading popup with jQuery magic!
-function loadPopup(){
+function loadPopup(id){
 	//loads popup only if it is disabled
 	if(popupStatus==0){
 		$("#backgroundPopup").css({
@@ -25,6 +25,8 @@ function loadPopup(){
 			document.getElementById("canvas")
 		);
 		App.run();
+    var view = new RelatednessCircleView(App);
+    view.load(id);
 	}
 }
 
