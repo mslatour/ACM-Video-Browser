@@ -15,6 +15,7 @@ function ACMVideo(data){
   var _video_id = data.video_id;
   var _screenshot = data.screenshot;
   var _year = data.year;
+  var _score = data.score;
 
   this.getId = this.getVideoId = function(){ return _video_id; };
   this.getYear = function(){ return _year; };
@@ -23,6 +24,8 @@ function ACMVideo(data){
   this.setScreenshot = function(screenshot){
     _screenshot = screenshot;
   };
+
+  this.getRelevanceScore = function(){ return _score; }
 
   this.draw = function(context){
     _parent.draw(context);

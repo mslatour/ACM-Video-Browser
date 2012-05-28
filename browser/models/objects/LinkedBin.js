@@ -25,17 +25,7 @@ function LinkedBin(max, prevBin){
 
   this.readdElement = function(key, elem){
     if( this.getNextBin() != null ){
-      if(! this.getNextBin().addElement(key, elem) ){
-        if( this.getPrevBin() != null ){
-          return this.getPrevBin().addElement(key, elem);
-        }else{
-          return false;
-        }
-      }else{
-        return true;
-      }
-    }else if( this.getPrevBin() != null){
-      return this.getPrevBin().addElement(key, elem);
+      return this.getNextBin().addElement(key, elem);
     }else{
       return false;
     }
