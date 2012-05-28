@@ -52,6 +52,8 @@ function RelatednessCircleView(app){
     layer.add(c3);
     
     var video;
+    var timelabel;
+    var lime_point, text_point;
     var offsetAngle = 0;
     for(var time in data){
       _frags[time] = new CircleFragment(
@@ -73,10 +75,27 @@ function RelatednessCircleView(app){
         layer.add(video);
         _frags[time].addElement(video.getId(), video);
       }
+      line_point = _frags[time].getPointOnIsoline(3*max/4, offsetAngle, 0);
+      text_point = _frags[time].getPointOnIsoline(3*max/4, offsetAngle, 5);
       layer.add(new Connection(
         origin_point,
-        _frags[time].getPointOnIsoline(3*max/4, offsetAngle)
+        line_point
       ));
+      timelabel = new Text(
+        data[time].name_short
+      );
+      layer.add(timelabel);
+      if(text_point.getX() >= origin.getX()){
+        timelabel.move(
+          text_point.getX(),
+          text_point.getY()
+        );
+      }else{
+        timelabel.move(
+          text_point.getX() - timelabel.getWidth(),
+          text_point.getY()
+        );
+      }
       _frags[time].layout(offsetAngle);
       offsetAngle += 2*Math.PI*(data[time].members.length/num);
     }

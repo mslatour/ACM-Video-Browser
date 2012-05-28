@@ -55,10 +55,6 @@ function Text(text, color, font){
   }
 
   this.draw = function(context){
-    context.save();
-    context.lineWidth = 1;
-    context.strokeRect(0, 0, this.getWidth(), this.getHeight());
-    context.restore();
     context.fillText(
       this.getText(),
       0,

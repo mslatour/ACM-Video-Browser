@@ -19,10 +19,11 @@ function CircleFragment(origin, fragment, isolines, min, max, offset){
     }
   }
 
-  this.getPointOnIsoline = function(isoline, angle){
+  this.getPointOnIsoline = function(isoline, angle, offset){
+    if(offset == undefined) offset = 0;
     return new GraphicalCoordinate(
-      origin.getX() + radius * Math.cos(angle),
-      origin.getY() + radius * Math.sin(angle)
+      origin.getX() + (offset + radius) * Math.cos(angle),
+      origin.getY() + (offset + radius) * Math.sin(angle)
     );
   }
 
