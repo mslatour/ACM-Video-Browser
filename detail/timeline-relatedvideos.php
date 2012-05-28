@@ -231,35 +231,8 @@ $prefix = '';
 			</ul>
 			</li>
 		<li class="related-column">
-		<h3>RELATED VIDEOS</h3>
-		<ul class="column">
-		<ol id="relatedvideos">
-		<?php
-		if ( sizeof($eindscore) > 0 )
-		{
-			$eindscore = array_slice($eindscore, 0, 20);
-			foreach($eindscore as $related_video => $value)
-			{
-		  	$res_related_video_meta = mysql_query(
-          sprintf(
-            "SELECT Metadata.title AS title, Metadata.authors AS authors, result.video_link AS videolink, Metadata.year AS year FROM Metadata, result WHERE Metadata.id = '%s' AND Metadata.id = result.id",
-            mysql_real_escape_string($related_video)
-          )
-        );
-
-        while($related_meta = mysql_fetch_array($res_related_video_meta))
-        {
-          echo "<li><a href=" . $related_meta['videolink'] . ">" . htmlentities($related_meta['title']) . " (<b>" . $related_meta['year'] . "</b>)</a></li>";
-        }
-			}
-		}
-		else
-		{
-			echo "<p>No related videos.</p>";
-		}
-		?>
-		</ol>
-		</ul>
+		<h3>RELATED VIDEOS</h3>	
+		<canvas id="canvas" width="1000" height="600" style='border: thin solid black;'></canvas>
 		</li>
 		</ul>
 	</div><!--popupContact-->

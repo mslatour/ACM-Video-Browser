@@ -20,16 +20,15 @@ ul ul li {
 }
 
 #timeline {
-	margin: 0px 20px;
     height: 500px;
     padding: 0px 20px;
-    overflow-y:hidden;
-	overflow-x:hidden;
+    overflow: auto;
     /*cursor: -moz-grab !important;*/ /* should this be applied with JS? */
     border: 2px solid #aec4d0;
 	background: url(images/background.jpg);
 	background-size:100% 100%;
 	background-repeat:no-repeat;
+	position: relative;
 }
 
 #t_header {
@@ -264,6 +263,7 @@ border:2px solid #cecece;
 z-index:2;
 padding:12px;
 font-size:13px;
+overflow-y: auto;
 }
 
 #popupContact h1{
@@ -292,12 +292,12 @@ display:block;
 #timeline .arrow{
 	height:86px;
 	width:60px;
-	position:absolute;
+	position: fixed;
+	margin: 15px;
 	background:url('images/arrows.png') no-repeat;
 	top:50%;
 	margin-top:-43px;
 	cursor:pointer;
-	z-index:5000;
 }
 
 #timeline .previous{ background-position:left top;left:0;}

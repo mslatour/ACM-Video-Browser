@@ -142,6 +142,8 @@ foreach($keyword_count as $key => $value)
 //The array with scores is sorted in reverse order, so the related video with the highest score (and thus the biggest match with the selected video) ends at the top.
 arsort($eindscore);
 
+$prefix = '';
+
 ?>
 
 <script src="jquery.js" type="text/javascript"></script>
