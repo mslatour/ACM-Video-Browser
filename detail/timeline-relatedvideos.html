@@ -104,6 +104,36 @@
     	event.preventDefault();
   	});
     **/
+
+	$('.video').dblclick(function() {
+      $.ajax({
+        url: 'timeline-relatedvideos.php',
+        type: 'post',
+        data:{id: $(this).attr('id')},
+        success: function(value){
+          $('#popup').html(value);
+          //centers popup
+          centerPopup();
+          //loads popup
+          loadPopup();
+        }
+      });
+	});		
+    //CLOSING POPUP
+    //Click the x event
+    $("#popupContactClose").click(function(){
+      disablePopup();
+    });
+    //Click out event
+    $("#backgroundPopup").click(function(){
+      disablePopup();
+    });
+    //Press Escape event
+    $(document).keypress(function(e){
+      if(e.keyCode==27 && popupStatus==1){
+        disablePopup();
+      }
+    });
   }
 
   function add_tcat(timeline, tcat_data){
@@ -178,35 +208,6 @@
       document.getElementById("test"),
       document.getElementById("menu-navigation-menu")
     );
-    $('.video').dblclick(function() {
-      $.ajax({
-        url: 'timeline-relatedvideos.php',
-        type: 'post',
-        data:{id: $(this).attr('id')},
-        success: function(value){
-          $('#popup').html(value);
-          //centers popup
-          centerPopup();
-          //loads popup
-          loadPopup();
-        }
-      });
-		});		
-    //CLOSING POPUP
-    //Click the x event
-    $("#popupContactClose").click(function(){
-      disablePopup();
-    });
-    //Click out event
-    $("#backgroundPopup").click(function(){
-      disablePopup();
-    });
-    //Press Escape event
-    $(document).keypress(function(e){
-      if(e.keyCode==27 && popupStatus==1){
-        disablePopup();
-      }
-    });
   });
 </script>
 <link rel="stylesheet" href="timeline-popup.css" type="text/css" media="screen" />
@@ -245,10 +246,12 @@
 <script src='../browser/models/objects/CircleFragmentBin.js'></script>
 <script src='../browser/models/objects/Spiral.js'></script>
 <script src='../browser/models/objects/ACMVideo.js'></script>
+<script src='../browser/models/objects/APIConnection.js'></script>
 
 <!-- Views -->
 <script src='../browser/models/views/View1.js'></script>
 <script src='../browser/models/views/CircleTestView.js'></script>
+<script src='../browser/models/views/RelatednessCircleView.js'></script>
 
 
 <!-- Application -->

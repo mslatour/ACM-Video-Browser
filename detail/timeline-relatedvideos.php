@@ -232,7 +232,7 @@ $prefix = '';
 			</li>
 		<li class="related-column">
 		<h3>RELATED VIDEOS</h3>	
-		<canvas id="canvas" width="1000" height="600" style='border: thin solid black;'></canvas>
+		<canvas id="canvas" width="600" height="540"></canvas>
 		</li>
 		</ul>
 	</div><!--popupContact-->

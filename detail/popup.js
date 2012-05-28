@@ -18,7 +18,13 @@ function loadPopup(){
 		});
 		$("#backgroundPopup").fadeIn("slow");
 		$("#popupContact").fadeIn("slow");
+
 		popupStatus = 1;
+
+		var App = new ACMBrowserApp(
+			document.getElementById("canvas")
+		);
+		App.run();
 	}
 }
 

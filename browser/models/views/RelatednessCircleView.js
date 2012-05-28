@@ -44,10 +44,10 @@ function RelatednessCircleView(app){
     var c1 = new Arc(50, 0, 2*Math.PI, "red", 2)
     c1.move(origin.getX(), origin.getY());
     layer.add(c1);
-    var c2 = new Arc(150, 0, 2*Math.PI, "blue", 2)
+    var c2 = new Arc(140, 0, 2*Math.PI, "blue", 2)
     c2.move(origin.getX(), origin.getY());
     layer.add(c2);
-    var c3 = new Arc(250, 0, 2*Math.PI, "yellow", 2)
+    var c3 = new Arc(230, 0, 2*Math.PI, "yellow", 2)
     c3.move(origin.getX(), origin.getY());
     layer.add(c3);
     
@@ -59,7 +59,7 @@ function RelatednessCircleView(app){
         (data[time].members.length/num),
         new Array(max/4,2*max/4,3*max/4),
         50, 
-        250, 
+        230, 
         5
       );
       for(var i = 0; i < data[time].members.length; i++){
