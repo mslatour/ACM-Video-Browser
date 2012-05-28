@@ -167,6 +167,14 @@ switch($_GET['mode']){
         }
       }
 
+      // Sort and slice videos list
+      uasort($videos, function($a, $b){
+        if($a['score'] == $b['score']) return 0;
+        return ($a['score'] <  $b['score'] ? 1 : -1 );
+      });
+
+      $videos = array_slice($videos, 0, 15, true);
+
       $result = array();
       /***********************************************
        * Add additional information about each video *
