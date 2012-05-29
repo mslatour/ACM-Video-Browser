@@ -59,7 +59,7 @@ function RelatednessCircleView(app){
       _frags[time] = new CircleFragment(
         this.getOrigin(), 
         (data[time].members.length/num),
-        new Array(max/4,2*max/4,3*max/4),
+        new Array(3*max/4,2*max/4,max/4),
         50, 
         230, 
         5
