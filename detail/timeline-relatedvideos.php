@@ -92,18 +92,18 @@ foreach($related_term as $related_video => $value)
 }
 
 //KEYWORDS
-$result_keywordselectedvideo = mysql_query(sprintf("SELECT `Keywords` FROM `Video-Keywords` WHERE `video_id` = '%s' ", mysql_real_escape_string($id) ));
+$result_keywordselectedvideo = mysql_query(sprintf("SELECT `keyword` FROM `Video-Keywords` WHERE `video_id` = '%s' ", mysql_real_escape_string($id) ));
 $keywords = array();
 
 while($row_keywordselectedvideo = mysql_fetch_array($result_keywordselectedvideo))
   {
-	array_push($keywords,  $row_keywordselectedvideo['Keywords']);
+	array_push($keywords,  $row_keywordselectedvideo['keyword']);
   }
 
 $related_keywords = array();
 foreach ($keywords as $keyword)
 {
-$related_result = mysql_query(sprintf("SELECT `video_id` AS related_video FROM `Video-Keywords` WHERE `Keywords` = '%s' AND NOT `video_id` = '%s'", mysql_real_escape_string($keyword), mysql_real_escape_string($id) ));
+$related_result = mysql_query(sprintf("SELECT `video_id` AS related_video FROM `Video-Keywords` WHERE `keyword` = '%s' AND NOT `video_id` = '%s'", mysql_real_escape_string($keyword), mysql_real_escape_string($id) ));
 
 while($row_relatedkeyword = mysql_fetch_array($related_result))
   {
