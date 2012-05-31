@@ -68,7 +68,7 @@
       }
     // Mousewheel does not always seem to work - SL
     }).mousewheel(function (event, delta) {
-         this.scrollLeft -= (delta * 30);
+        this.scrollLeft -= (delta * 30);
     }).css({
         'overflow' : 'hidden',
         'cursor' : '-moz-grab'
@@ -176,14 +176,30 @@
 
   function add_video(container, video_data){
     var item = document.createElement("li");
+    var video_container = document.createElement("div");
+    video_container.setAttribute("class", "video_container");
+
     var video = document.createElement('img');
     video.setAttribute("class", "video");
     video.setAttribute("id", video_data.id);
     video.setAttribute("src", video_data.key_frame);
     video.setAttribute("width", "96");
     video.setAttribute("height", "72");
-    item.appendChild(video);
-    container.appendChild(item);
+
+    var title = document.createElement("span");
+    title.setAttribute("class", "title");
+    title.innerHTML = "This is a title";
+
+    var authors = document.createElement("span");
+    authors.setAttribute("class", "authors");
+    authors.innerHTML = "Judith en Sander";
+
+    video_container.appendChild(video);
+    video_container.appendChild(title);
+    video_container.appendChild(document.createElement("br"));
+    video_container.appendChild(authors);
+    item.appendChild(video_container); 
+   container.appendChild(item);
   }
 
   function add_video_container(content){

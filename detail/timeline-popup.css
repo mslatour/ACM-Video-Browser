@@ -59,14 +59,22 @@ ul ul li {
 .tl-events .column {
     float: left;
     display: block;
-    width: 100px;
+    width: 300px;
 }
 
 .tl-events .column li {
     list-style: none;
-	  padding: 0px;
+	padding: 0px;
+	width: 100%;
 }
 
+.tl-events .column .video_container {
+	width: 100%;
+}
+
+.tl-events .column .video {
+	float:left;
+}
 
 .tl-events h3{color: #B0B0B0;}
 .tl-events a{text-decoration:none; color:white;}
