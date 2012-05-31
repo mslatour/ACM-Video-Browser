@@ -13,12 +13,17 @@ function RelatednessCircleView(app){
 
     var api = new APIConnection();
 
+    var video_collection = new Collection();
+
     var video_data = JSON.parse(api.getVideoDetails(video_id, false));
     var origin =  new ACMVideo({
       "video_id": video_data.id,
       "screenshot": "../"+video_data.key_frame,
       "year": video_data.year,
-      "score": video_data.score
+      "score": video_data.score,
+      "keywords": video_data.keywords,
+      "terms": video_data.terms,
+      "categories": video_data.categories
     });
 
     layer.add(origin);
@@ -68,9 +73,12 @@ function RelatednessCircleView(app){
         video = new ACMVideo({
           "video_id": data[time].members[i].id,
           "screenshot": "../"+data[time].members[i].key_frame,
-          "year": data[time].members[i].year,
-          "score": data[time].members[i].score
+          "score": data[time].members[i].score,
+          "keywords": data[time].members[i].keywords,
+          "terms": data[time].members[i].terms,
+          "categories": data[time].members[i].categories
         });
+        video_collection.addElement(video.getId(), video);
         video.scaleToBox(50,50);
         layer.add(video);
         _frags[time].addElement(video.getId(), video);
@@ -117,5 +125,6 @@ function RelatednessCircleView(app){
     
     origin.move(-1*(origin.getWidth()/2), -1*(origin.getHeight()/2));
     layer.paint(this.getApplication().getContext());
+    return video_collection;
   }
 }

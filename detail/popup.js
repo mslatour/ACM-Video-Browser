@@ -26,7 +26,16 @@ function loadPopup(id){
 		);
 		App.run();
     var view = new RelatednessCircleView(App);
-    view.load(id);
+    var videos = view.load(id);
+    var set936 = videos.findall(
+      function(key, video){
+        var categories = video.getCategories();
+        for(var i = 0; i < categories.length; i++){
+          if(categories[i] == "936") return true;
+        }
+        return false;
+      }
+    );
 	}
 }
 

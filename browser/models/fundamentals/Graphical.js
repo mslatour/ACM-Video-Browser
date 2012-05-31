@@ -8,6 +8,8 @@ function Graphical(){
   var _width = 30;
   var _height = 30;
   var _rotate = 0;
+
+  var _hide;
   
   var _enlarged = false;
 
@@ -29,6 +31,10 @@ function Graphical(){
     this.tell("onChangeWidth", {width:Math.floor(width)});
   };
 
+  this.hide = function(){ _hide = true; };
+  this.show = function(){ _hide = false; };
+  this.isHidden = function(){ return _hide; };
+  
   this.scale = function(scale){
     this.setWidth(this.getWidth()*scale);
     this.setHeight(this.getHeight()*scale);
@@ -129,9 +135,11 @@ function Graphical(){
   }
 
   this.paint = function(context){
-    this.beforeDraw(context);
-    this.draw(context);
-    this.afterDraw(context);
+    if(!this.isHidden()){
+      this.beforeDraw(context);
+      this.draw(context);
+      this.afterDraw(context);
+    }
   }
 
   this.onDragStart = function(e){

@@ -31,7 +31,7 @@ function Collection(){
     var coll = new Collection();
     for(var i = 0; i < keys.length; i++){
       if( this.hasElement(key) ){
-        coll.addElement(this.getElement(keys[i]));
+        coll.addElement(key, this.getElement(keys[i]));
       }
     }
     return coll;
@@ -50,5 +50,15 @@ function Collection(){
     for(var key in _elems){
       callback(key, _elems[key]);
     }
+  }
+
+  this.findall = function(test){
+    var coll = new Collection();
+    for(var key in _elems){
+      if( test(key, _elems[key]) ){
+        coll.addElement(key, _elems[key]);
+      }
+    }
+    return coll;
   }
 }
