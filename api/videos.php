@@ -208,6 +208,7 @@ switch($_GET['mode']){
     break;
   case "details":
     if(isset($_GET['id'])){
+      // Get general details
       $res_details = mysql_query(
         sprintf(
           $q_get_video_details,
@@ -215,11 +216,52 @@ switch($_GET['mode']){
         )
       );
       $row_details = mysql_fetch_assoc($res_details);
+      
+      // Get keywords
+      $res_keywords = mysql_query(
+        sprintf(
+          $q_get_keywords,
+          mysql_real_escape_string($row_details['id'])
+        )
+      );
+      $keywords = array();
+      while($row_keywords = mysql_fetch_assoc($res_keywords)){
+        $keywords[] = $row_keywords['keyword'];
+      }
+      
+      // Get terms
+      $res_terms = mysql_query(
+        sprintf(
+          $q_get_terms,
+          mysql_real_escape_string($row_details['id'])
+        )
+      );
+      $terms = array();
+      while($row_terms = mysql_fetch_assoc($res_terms)){
+        $terms[] = $row_terms['term_id'];
+      }
+      
+      // Get categories
+      $res_categories = mysql_query(
+        sprintf(
+          $q_get_categories,
+          mysql_real_escape_string($row_details['id'])
+        )
+      );
+      $categories = array();
+      while($row_categories = mysql_fetch_assoc($res_categories)){
+        $categories[] = $row_categories['category_id'];
+      }
+
       echo json_encode(
         array(
           "id"=>$row_details['id'], 
           "key_frame"=>$row_details['key_frame'],
-          "time_category"=>$row_details['time_category']
+          "time_category"=>$row_details['time_category'],
+          "year"=>$row_details['year'],
+          "keywords"=>$keywords,
+          "terms"=>$terms,
+          "categories"=>$categories
         )
       );
     }
