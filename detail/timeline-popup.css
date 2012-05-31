@@ -20,7 +20,7 @@ ul ul li {
 }
 
 #timeline {
-    height: 500px;
+    height: 520px;
     padding: 0px 20px;
     overflow: auto;
     /*cursor: -moz-grab !important;*/ /* should this be applied with JS? */
@@ -32,8 +32,7 @@ ul ul li {
 }
 
 #t_header {
-	margin: 0px 20px;
-    padding: 0px 20px;
+
     /*cursor: -moz-grab !important;*/ /* should this be applied with JS? */
 }
 
@@ -41,13 +40,15 @@ ul ul li {
     width: 6000px;
     list-style: none;
     margin: 0px;
-  	height: 480px;
+  	height: 510px;
 }
 
 .tl-events li {
     float: left;
     margin-right: 10px;
 	  padding: 0px 25px 0px 25px;
+	position: relative;
+	height: 100%;
 }
 
 .tl-events ul {
@@ -70,10 +71,28 @@ ul ul li {
 
 .tl-events .column .video_container {
 	width: 100%;
+	margin: 3px 2px;
+	height: 80px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .tl-events .column .video {
 	float:left;
+	margin-right: 5px;
+}
+
+.tl-events .column .title {
+	font-weight:bold;
+}
+
+.tl-events .column .authors {
+	font-style:italic;
+	width: 100%;
+	font-size:90%;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
 }
 
 .tl-events h3{color: #B0B0B0;}
@@ -100,12 +119,9 @@ h1 {
 
 .timeline-bar {
     float: left;
-    margin-right: 10px;
-	margin-left: 25px;
+	height: 30px;
+	margin-top: 10px;
 	padding: 0px 25px 0px 25px;
-}
-
-#access {
 	background: #222; /* Show a solid color for older browsers */
 	background: -moz-linear-gradient(#252525, #0a0a0a);
 	background: -o-linear-gradient(#252525, #0a0a0a);
@@ -117,10 +133,17 @@ h1 {
 	clear: both;
 	display: block;
 	float: left;
-	margin: 0 auto 25px;
 	width: 100%;
-	height: 30px;
+	position: absolute; bottom: 0;
+
 }
+
+.timeline-bar a{
+text-align: left;
+vertical-align:middle;
+	line-height: 200%;
+}
+
 #access ul {
 	font-size: 13px;
 	list-style: none;
@@ -172,8 +195,10 @@ h1 {
 
 #relatedvideos li {
 clear: both;
-
 }
+
+
+
 
 /* = Popup
 -------------------------------------------------------------- */
@@ -310,6 +335,7 @@ display:block;
 	top:50%;
 	margin-top:-43px;
 	cursor:pointer;
+	z-index: 2;
 }
 
 #timeline .previous{ background-position:left top;left:0;}

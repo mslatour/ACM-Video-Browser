@@ -234,6 +234,7 @@ switch($_GET['mode']){
     $q_get_videos_scope = "SELECT * FROM `result` WHERE time_category = %d";
     $q_get_time_categories = "SELECT * FROM TimeCategories";
     $q_get_time_categories_scope = "SELECT * FROM TimeCategories WHERE id = %d";
+	$q_get_title_authors = "SELECT Title, Authors FROM Metadata WHERE id = '%s'";
 
     $tcats = array();
 
@@ -281,7 +282,14 @@ switch($_GET['mode']){
     while( $row = mysql_fetch_assoc($result) ){
       $video = array();
       $video['id'] = $row['id'];
+      $video = array();
+      $video['id'] = $row['id'];
+      $result_meta_data = mysql_query(sprintf($q_get_title_authors, mysql_real_escape_string($video['id'])));
+      $row_meta_data = mysql_fetch_assoc($result_meta_data);
+	  $video['title'] = utf8_encode($row_meta_data['Title']);
+      $video['authors'] = utf8_encode($row_meta_data['Authors']);
       $video['key_frame'] = "../".$row['key_frame'];
+
       $tcats[$row['time_category']]["members"][] = $video;
     }
 
