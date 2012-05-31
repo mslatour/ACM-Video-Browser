@@ -21,10 +21,10 @@ ul ul li {
 
 #timeline {
     height: 520px;
-    padding: 0px 20px;
     overflow: auto;
     /*cursor: -moz-grab !important;*/ /* should this be applied with JS? */
     border: 2px solid #aec4d0;
+	border-top-style:none;
 	background: url(images/background.jpg);
 	background-size:100% 100%;
 	background-repeat:no-repeat;
@@ -32,7 +32,10 @@ ul ul li {
 }
 
 #t_header {
-
+	height: 53px;
+    border: 2px solid #aec4d0;
+	border-bottom-style:none;
+	overflow: hidden;
     /*cursor: -moz-grab !important;*/ /* should this be applied with JS? */
 }
 
@@ -41,6 +44,7 @@ ul ul li {
     list-style: none;
     margin: 0px;
   	height: 510px;
+	padding: 0px;
 }
 
 .tl-events li {

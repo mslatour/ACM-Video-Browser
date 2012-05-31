@@ -45,6 +45,22 @@
           if(i % 4 == 0) container = add_video_container(content);
           add_video(container, tcat_data[tcat_id]["members"][i]);
         }
+
+	$('.video').click(function() {
+      var id = $(this).attr('id');
+      $.ajax({
+        url: 'timeline-relatedvideos.php',
+        type: 'post',
+        data:{id: id},
+        success: function(value){
+          $('#popup').html(value);
+          //centers popup
+          centerPopup();
+          //loads popup
+          loadPopup(id);
+        }
+      });
+	});		
       }
     });
   }
@@ -342,6 +358,9 @@
 
 </head>
 <body>
+<div id="t_header">
+	<img src="images/banner.png" href="http://www.sigmm.org/" />
+</div>
 <div id="timeline">
     <span class="arrow previous" id="previous"></span>
     <span class="arrow next" id="next"></span>
