@@ -44,10 +44,10 @@ function RelatednessCircleView(app){
     var c1 = new Arc(50, 0, 2*Math.PI, "red", 2)
     c1.move(origin.getX(), origin.getY());
     layer.add(c1);
-    var c2 = new Arc(140, 0, 2*Math.PI, "blue", 2)
+    var c2 = new Arc(137, 0, 2*Math.PI, "blue", 2)
     c2.move(origin.getX(), origin.getY());
     layer.add(c2);
-    var c3 = new Arc(230, 0, 2*Math.PI, "yellow", 2)
+    var c3 = new Arc(224, 0, 2*Math.PI, "yellow", 2)
     c3.move(origin.getX(), origin.getY());
     layer.add(c3);
     
@@ -61,7 +61,7 @@ function RelatednessCircleView(app){
         (data[time].members.length/num),
         new Array(3*max/4,2*max/4,max/4),
         50, 
-        230, 
+        224,
         5
       );
       for(var i = 0; i < data[time].members.length; i++){
@@ -71,12 +71,34 @@ function RelatednessCircleView(app){
           "year": data[time].members[i].year,
           "score": data[time].members[i].score
         });
-        video.scaleToBox(30,30);
+        video.scaleToBox(50,50);
         layer.add(video);
         _frags[time].addElement(video.getId(), video);
       }
       line_point = _frags[time].getPointOnIsoline(3*max/4, offsetAngle, 0);
-      text_point = _frags[time].getPointOnIsoline(3*max/4, offsetAngle, 5);
+      if(
+          (
+            offsetAngle + Math.PI*(data[time].members.length/num) > (Math.PI/4) &&
+            offsetAngle + Math.PI*(data[time].members.length/num) < (3*Math.PI/4)
+          )
+        ||
+          (
+            offsetAngle + Math.PI*(data[time].members.length/num) > (Math.PI+Math.PI/4) &&
+            offsetAngle + Math.PI*(data[time].members.length/num) < (Math.PI+3*Math.PI/4)
+          )
+      ){
+        text_point = _frags[time].getPointOnIsoline(
+          3*max/4,
+          offsetAngle + (Math.PI*(data[time].members.length/num)),
+          15
+        );
+      }else{
+        text_point = _frags[time].getPointOnIsoline(
+          3*max/4,
+          offsetAngle + (Math.PI*(data[time].members.length/num)),
+          30
+        );
+      }
       layer.add(new Connection(
         origin_point,
         line_point
