@@ -18,6 +18,23 @@ mysql_select_db("my_db", $con);
     )
   );
   $row_meta_data = mysql_fetch_array($res_meta_data);
+		
+  //gets authors of selected video.
+  $res_authors = mysql_query(
+    sprintf(
+      "SELECT Authors FROM `Video-Authors` WHERE id='%s'",
+      mysql_real_escape_string($id)
+    )
+  );
+
+$authors = array();
+
+while($row_authors = mysql_fetch_array($res_authors))
+  {
+	$authors[] = $row_authors['Authors'];
+  }
+
+
 
 /*CATEGORIES*/
 //Select categories and weight from selected video.
@@ -189,7 +206,18 @@ $prefix = '';
 			<p><?php if (! $row_meta_data['paperlink'] == '') {echo "<a name='FullTextPdf' title='FullText Pdf' href=../" . $row_meta_data['paperlink'] . " target='_blank'><img src='images/pdf_logo.gif' alt='Pdf' class='fulltext_lnk' border='0'>Pdf</a>";} 
 			echo "<a name='Video' href=../" . $row_meta_data['videolink'] . "><img src='images/Download-32.png' class='fullvideo_lnk' border='0'>Download video</a>";
 			?></p>
-			<p><?php echo   "<b>Authors: </b>" . htmlentities($row_meta_data['authors']); ?></p> 
+			<p><?php if ( sizeof($authors) > 0)
+					{
+					$prefix = '';
+					echo "<br /><b>Authors: </b>";
+					foreach ($authors as $key => $value)
+					{
+						$author_id = str_replace (" ", "", $value);
+						echo $prefix . '<span class="author" id=' . $author_id . '>' . htmlentities($value) . "</span>";
+						$prefix = ', ';
+					}
+					}
+					 ?></p> 
 			<p><?php if ( sizeof($keywords) > 0)
 					{
 					$prefix = '';

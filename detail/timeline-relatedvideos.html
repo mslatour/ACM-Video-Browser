@@ -22,11 +22,41 @@
     });
   }
 
+
   function init_expand_trigger(tcat, tcat_id, tcat_nav){
     $(tcat_nav).click(function(){
-      expand_tcat(tcat, tcat_id);
+	if(true)
+	{
+		expand_tcat(tcat, tcat_id);
+	}
+	else
+	{
+		unexpand_tcat(tcat, tcat_id);
+	}
     });
   }
+
+/*
+  function unexpand_tcat(tcat, tcat_id){
+    var content = tcat.getElementsByTagName("div")[0];
+    $.ajax({
+      url: '../api/videos.php?mode=list&limited=1',
+      type: 'get',
+      success: function(data){
+        while(content.firstChild){
+          content.removeChild(content.firstChild);
+        }
+        var tcat_data = JSON.parse(data);
+        var container;
+        for(var i = 0; i < tcat_data[tcat_id]["members"].length; i++){
+          if(i % 4 == 0) container = add_video_container(content);
+          add_video(container, tcat_data[tcat_id]["members"][i]);
+        }
+		}
+		});
+	}
+
+*/
 
   function expand_tcat(tcat, tcat_id){
     //var details = tcat.getElementsByTagName("div")[0];
@@ -358,10 +388,11 @@
 
 </head>
 <body>
+
+<div id="timeline">
 <div id="t_header">
 	<img src="images/banner.png" href="http://www.sigmm.org/" />
 </div>
-<div id="timeline">
     <span class="arrow previous" id="previous"></span>
     <span class="arrow next" id="next"></span>
   <ul class="tl-events" id="test">

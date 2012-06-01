@@ -22,7 +22,6 @@ ul ul li {
 #timeline {
     height: 520px;
     overflow: auto;
-    /*cursor: -moz-grab !important;*/ /* should this be applied with JS? */
     border: 2px solid #aec4d0;
 	border-top-style:none;
 	background: url(images/background.jpg);
@@ -33,10 +32,12 @@ ul ul li {
 
 #t_header {
 	height: 53px;
-    border: 2px solid #aec4d0;
+    /*border: 2px solid #aec4d0;*/
 	border-bottom-style:none;
 	overflow: hidden;
-    /*cursor: -moz-grab !important;*/ /* should this be applied with JS? */
+	position:fixed;
+	display: block;
+	zoom: 1;
 }
 
 .tl-events {
@@ -84,6 +85,7 @@ ul ul li {
 .tl-events .column .video {
 	float:left;
 	margin-right: 5px;
+	cursor: pointer;
 }
 
 .tl-events .column .title {
