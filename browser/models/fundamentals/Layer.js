@@ -115,8 +115,8 @@ function Layer(application,previousLayer){
     var object = _self.containedBy(e);
     // Propagate event
     if(object){
-      if(object[callback]) object[callback](e);
-      else if(object.onEvent) object.onEvent(e, callback);
+      if(object[callback]) object[callback].call(object,e);
+      else if(object.onEvent) object.onEvent.call(object, e, callback);
     }
     
     if(!object || e.bubble){

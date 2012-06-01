@@ -9,7 +9,7 @@ function Graphical(){
   var _height = 30;
   var _rotate = 0;
 
-  var _hide;
+  var _hide = false;
   
   var _enlarged = false;
 

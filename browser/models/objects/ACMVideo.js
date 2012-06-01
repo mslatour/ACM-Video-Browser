@@ -31,6 +31,14 @@ function ACMVideo(data){
     _screenshot = screenshot;
   };
 
+  this.onMouseOver = function(e){
+    alert(this.getId());
+  }
+
+  this.onMouseOut = function(e){
+    alert("bye");
+  }
+
   this.getRelevanceScore = function(){ return _score; }
 
   this.draw = function(context){
