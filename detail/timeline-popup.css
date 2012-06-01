@@ -20,7 +20,7 @@ ul ul li {
 }
 
 #timeline {
-    height: 520px;
+    height: 600px;
     overflow: auto;
     border: 2px solid #aec4d0;
 	border-top-style:none;
@@ -31,13 +31,28 @@ ul ul li {
 }
 
 #t_header {
-	height: 53px;
-    /*border: 2px solid #aec4d0;*/
-	border-bottom-style:none;
+	height: 40px;
+	width: 100%;
+    /*border: 2px solid #aec4d0;
+	border-bottom:1px dotted #D3D3D3;*/
 	overflow: hidden;
 	position:fixed;
 	display: block;
 	zoom: 1;
+	z-index: 2;
+	margin: 5px 0px 0px 5px;
+}
+
+#t_header .banner {
+	height: 100%;
+	margin: 0px 100px 0px 5px;
+}
+
+#t_header h1 {
+	color: white;
+	display: inline;
+	right: 50%;
+	margin-left: 100px;
 }
 
 .tl-events {
@@ -46,6 +61,7 @@ ul ul li {
     margin: 0px;
   	height: 510px;
 	padding: 0px;
+	position: absolute; bottom: 5px;
 }
 
 .tl-events li {
