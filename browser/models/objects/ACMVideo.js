@@ -31,18 +31,55 @@ function ACMVideo(data){
     _screenshot = screenshot;
   };
 
-  this.onMouseMove = function(e){
-    var keywords = this.getKeywords()
+  this.onMouseOver = function(e){
+    var elem;
+    var keywords = this.getKeywords();
     for(var i = 0; i < keywords.length; i++){
-      document.getElementById(
+      elem = document.getElementById(
         "keyword_"+keywords[i].toLowerCase().replace(" ","_")
-      ).style.fontWeight = 'bold';
+      );
+      if(elem){
+        elem.style.fontWeight = 'bold';
+      }else{
+        alert("keyword_"+keywords[i].toLowerCase().replace(" ","_")+" does not exist!");
+      }
     }
     var categories = this.getCategories();
     for(var i = 0; i < categories.length; i++){
-      document.getElementById(
+      elem = document.getElementById(
         "category_"+categories[i].toLowerCase().replace(" ","_")
-      ).style.fontWeight = 'bold';
+      )
+      if(elem){
+        elem.style.fontWeight = 'bold';
+      }else{
+        alert("category_"+categories[i].toLowerCase().replace(" ","_")+" does not exist!");
+      }
+    }
+  }
+  
+  this.onMouseOut = function(e){
+    var elem;
+    var keywords = this.getKeywords();
+    for(var i = 0; i < keywords.length; i++){
+      elem = document.getElementById(
+        "keyword_"+keywords[i].toLowerCase().replace(" ","_")
+      );
+      if(elem){
+        elem.style.fontWeight = 'normal';
+      }else{
+        alert("keyword_"+keywords[i].toLowerCase().replace(" ","_")+" does not exist!");
+      }
+    }
+    var categories = this.getCategories();
+    for(var i = 0; i < categories.length; i++){
+      elem = document.getElementById(
+        "category_"+categories[i].toLowerCase().replace(" ","_")
+      )
+      if(elem){
+        elem.style.fontWeight = 'normal';
+      }else{
+        alert("category_"+categories[i].toLowerCase().replace(" ","_")+" does not exist!");
+      }
     }
   }
 

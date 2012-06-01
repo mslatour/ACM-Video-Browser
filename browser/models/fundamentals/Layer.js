@@ -7,6 +7,8 @@ function Layer(application,previousLayer){
   var _graphicals = new Array();
   this._context = null;
 
+  var onMouseMoveTarget = null;
+
   this.getApplication = function(){ return _application; };
   this.setApplication = function(app){ _application = app; };
 
@@ -113,10 +115,27 @@ function Layer(application,previousLayer){
 
   this.onEvent = function(e, callback){
     var object = _self.containedBy(e);
+
     // Propagate event
     if(object){
-      if(object[callback]) object[callback].call(object,e);
-      else if(object.onEvent) object.onEvent.call(object, e, callback);
+      // Store onMouseMove Target
+      if( callback == "onMouseMove" ){
+        if( onMouseMoveTarget == null ){
+          if("onMouseOver" in object) object.onMouseOver.call(object, e);
+          else if(object.onEvent) object.onEvent.call(object, e, "onMouseOver");
+        }else if( object != onMouseMoveTarget ){
+          if("onMouseOut" in onMouseMoveTarget) onMouseMoveTarget.onMouseOut.call(object, e);
+          else if(onMouseMoveTarget.onEvent) onMouseMoveTarget.onEvent.call(object, e, "onMouseOut");
+          if("onMouseOver" in object) object.onMouseOver.call(object, e);
+          else if(object.onEvent) object.onEvent.call(object, e, "onMouseOver");
+        }
+        if("onMouseMove" in object) object.onMouseMove.call(object, e);
+        else if(object.onEvent) object.onEvent.call(object, e, "onMouseMove");
+        onMouseMoveTarget = object;
+      }else{
+        if(object[callback]) object[callback].call(object,e);
+        else if(object.onEvent) object.onEvent.call(object, e, callback);
+      }
     }
     
     if(!object || e.bubble){
