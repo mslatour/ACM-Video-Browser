@@ -31,6 +31,21 @@ function ACMVideo(data){
     _screenshot = screenshot;
   };
 
+  this.onMouseMove = function(e){
+    var keywords = this.getKeywords()
+    for(var i = 0; i < keywords.length; i++){
+      document.getElementById(
+        "keyword_"+keywords[i].toLowerCase().replace(" ","_")
+      ).style.fontWeight = 'bold';
+    }
+    var categories = this.getCategories();
+    for(var i = 0; i < categories.length; i++){
+      document.getElementById(
+        "category_"+categories[i].toLowerCase().replace(" ","_")
+      ).style.fontWeight = 'bold';
+    }
+  }
+
   this.getRelevanceScore = function(){ return _score; }
 
   this.draw = function(context){

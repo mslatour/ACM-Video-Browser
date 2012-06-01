@@ -224,7 +224,7 @@ $prefix = '';
 					echo "<br /><b>Keywords: </b>";
 					foreach ($keywords as $key => $value)
 					{
-						echo $prefix . ' ' . $value;
+						echo "<span id='keyword_".str_replace(" ","_",strtolower($value))."'>".$prefix . ' ' . $value."</span>";
 						$prefix = ', ';
 					}
 					}
@@ -237,7 +237,7 @@ $prefix = '';
 					{
 						$result_catlabels = mysql_query(sprintf("SELECT label FROM `Categories2` WHERE `key` = '%s' ", mysql_real_escape_string($key) ));
 						$row_catlabels = mysql_fetch_array($result_catlabels);
-						echo $prefix . ' ' . $row_catlabels['label'];
+						echo "<span id='category_".str_replace(" ","_",strtolower($key))."'>".$prefix.' '.$row_catlabels['label']."</span>";
 						$prefix = ', ';
 					}
 					}
@@ -250,7 +250,7 @@ $prefix = '';
 					{
 					$result_termlabels = mysql_query(sprintf("SELECT Text FROM `General Terms` WHERE `ID` = '%s' ", mysql_real_escape_string($value) ));
 					$row_termlabels = mysql_fetch_array($result_termlabels);
-					echo $prefix . ' ' . $row_termlabels['Text'];
+				  echo "<span id='term_".str_replace(" ","_",strtolower($value))."'>".$prefix . ' ' . $row_termlabels['Text']."</span>";
 					$prefix = ', ';
 					}
 					}
