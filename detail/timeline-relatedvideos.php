@@ -212,8 +212,8 @@ $prefix = '';
 					echo "<br /><b>Authors: </b>";
 					foreach ($authors as $key => $value)
 					{
-						$author_id = str_replace (" ", "", $value);
-						echo $prefix . '<span class="author" id=' . $author_id . '>' . htmlentities($value) . "</span>";
+						$author_id = str_replace (" ", "_", strtolower($value));
+						echo $prefix . '<span id=author_' . $author_id . '>' . htmlentities($value) . "</span>";
 						$prefix = ', ';
 					}
 					}
