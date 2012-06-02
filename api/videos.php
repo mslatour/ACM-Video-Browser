@@ -328,12 +328,11 @@ switch($_GET['mode']){
       while( $row_videos = mysql_fetch_assoc($result_videos) ){
         $video = array();
         $video['id'] = $row_videos['id'];
-        $video = array();
-        $video['id'] = $row_videos['id'];
         $result_meta_data = mysql_query(sprintf($q_get_title_authors, mysql_real_escape_string($video['id'])));
         $row_meta_data = mysql_fetch_assoc($result_meta_data);
         $video['title'] = utf8_encode($row_meta_data['Title']);
         $video['authors'] = utf8_encode($row_meta_data['Authors']);
+        $video['winner'] = $row_videos['prize_winner'];
         $video['key_frame'] = "../".$row_videos['key_frame'];
         $tcats[$row['id']]["members"][] = $video;
       }

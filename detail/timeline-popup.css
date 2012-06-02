@@ -140,6 +140,15 @@ overflow: hidden;
 text-overflow: ellipsis;
 }
 
+.tl-events .column .prize {
+	width: 100%;
+	font-size:90%;
+}
+
+.tl-events .column .icon {
+	margin: 0px 2px;
+}
+
 .tl-events h3{color: #B0B0B0;}
 .tl-events a{text-decoration:none; color:white;}
 .tl-events a:hover{text-decoration:underline; }
