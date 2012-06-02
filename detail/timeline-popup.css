@@ -65,6 +65,28 @@ ul ul li {
 
 }
 
+.tl-events .column .show_more {
+  width: 90%;
+  height: 20px;
+  padding-top: 3px;
+  cursor: pointer;
+  text-align: center;
+  background: #202020;
+  color: white;
+  font-weight: bold;
+}
+
+.tl-events .column .show_more:hover {
+  width: 90%;
+  height: 20px;
+  padding-top: 3px;
+  cursor: pointer;
+  text-align: center;
+  background: #1689BA;
+  color: white;
+  font-weight: bold;
+}
+
 .tl-events li {
     float: left;
     margin-right: 10px;
