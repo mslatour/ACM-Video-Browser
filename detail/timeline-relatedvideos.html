@@ -254,10 +254,35 @@
     authors.setAttribute("class", "authors");
     authors.innerHTML = video_data.authors;
 
+    if ( video_data.winner != 0)
+    {
+    var prize = document.createElement("span");
+    prize.setAttribute("class", "prize");
+      if( video_data.winner == 1)
+      {
+      prize.innerHTML = "Prize winner";
+      }
+      else if (video_data.winner == 2)
+      {
+      prize.innerHTML = "Audience favourite";
+      }
+    }
+
     video_container.appendChild(video);
     video_container.appendChild(title);
     video_container.appendChild(document.createElement("br"));
     video_container.appendChild(authors);
+    if (typeof( prize ) != 'undefined' )
+    {
+    video_container.appendChild(document.createElement("br"));
+    var cup_icon = document.createElement('img');
+    cup_icon.setAttribute("class", "icon");
+    cup_icon.setAttribute("src", "images/cup.png");
+    cup_icon.setAttribute("width", "12");
+    cup_icon.setAttribute("height", "12");
+    video_container.appendChild(cup_icon);
+    video_container.appendChild(prize);
+    }
     item.appendChild(video_container); 
    container.appendChild(item);
   }
@@ -301,7 +326,6 @@
       document.getElementById("test"),
       document.getElementById("menu-navigation-menu")
     );
-
 
 //CODE TO MAKE NAVIGATION ARROWS WORK
 	$('#timeline span').click(function() {
