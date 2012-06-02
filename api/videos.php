@@ -286,13 +286,11 @@ switch($_GET['mode']){
   default:
     ob_start();
     // Set queries
-    $q_get_videos_limited = "SELECT * FROM `result` ORDER BY RAND() LIMIT 20";
-    $q_get_videos = "SELECT * FROM `result`";
-    $q_get_videos_scope_limited = "SELECT * FROM `result` WHERE time_category = %d ORDER BY RAND() LIMIT 20";
-    $q_get_videos_scope = "SELECT * FROM `result` WHERE time_category = %d";
+    $q_get_videos_limited = "SELECT * FROM `result` WHERE time_category = %d ORDER BY name LIMIT 5";
+    $q_get_videos = "SELECT * FROM `result` WHERE time_category = %d";
     $q_get_time_categories = "SELECT * FROM TimeCategories";
     $q_get_time_categories_scope = "SELECT * FROM TimeCategories WHERE id = %d";
-	$q_get_title_authors = "SELECT Title, Authors FROM Metadata WHERE id = '%s'";
+  	$q_get_title_authors = "SELECT Title, Authors FROM Metadata WHERE id = '%s'";
 
     $tcats = array();
 
@@ -306,49 +304,40 @@ switch($_GET['mode']){
     }else{    
       $result = mysql_query($q_get_time_categories);
     }
+
     while($row = mysql_fetch_assoc($result)){
       $row['members'] = array();
       $tcats[$row['id']] = $row;
-    }
-
-    if($_GET['limited'] == 1){
-      if(isset($_GET['scope']) && intval($_GET['scope']) > 0){
-        $result = mysql_query(
-            sprintf(
-              $q_get_videos_scope_limited,
-              mysql_real_escape_string($_GET['scope'])
-              )
-            );
+      
+      if($_GET['limited'] == 1){
+        $result_videos = mysql_query(
+          sprintf(
+            $q_get_videos_limited,
+            mysql_real_escape_string($row['id'])
+          )
+        );
       }else{
-        $result = mysql_query($q_get_videos_limited);
+        $result_videos = mysql_query(
+          sprintf(
+            $q_get_videos,
+            mysql_real_escape_string($row['id'])
+          )
+        );
       }
-    }else{
-      if(isset($_GET['scope']) && intval($_GET['scope']) > 0){
-        $result = mysql_query(
-            sprintf(
-              $q_get_videos_scope,
-              mysql_real_escape_string($_GET['scope'])
-              )
-            );
-      }else{
-        $result = mysql_query($q_get_videos);
+      
+      while( $row_videos = mysql_fetch_assoc($result_videos) ){
+        $video = array();
+        $video['id'] = $row_videos['id'];
+        $video = array();
+        $video['id'] = $row_videos['id'];
+        $result_meta_data = mysql_query(sprintf($q_get_title_authors, mysql_real_escape_string($video['id'])));
+        $row_meta_data = mysql_fetch_assoc($result_meta_data);
+        $video['title'] = utf8_encode($row_meta_data['Title']);
+        $video['authors'] = utf8_encode($row_meta_data['Authors']);
+        $video['key_frame'] = "../".$row_videos['key_frame'];
+        $tcats[$row['id']]["members"][] = $video;
       }
-    }
 
-    $videos = array();
-
-    while( $row = mysql_fetch_assoc($result) ){
-      $video = array();
-      $video['id'] = $row['id'];
-      $video = array();
-      $video['id'] = $row['id'];
-      $result_meta_data = mysql_query(sprintf($q_get_title_authors, mysql_real_escape_string($video['id'])));
-      $row_meta_data = mysql_fetch_assoc($result_meta_data);
-  	  $video['title'] = utf8_encode($row_meta_data['Title']);
-      $video['authors'] = utf8_encode($row_meta_data['Authors']);
-      $video['key_frame'] = "../".$row['key_frame'];
-
-      $tcats[$row['time_category']]["members"][] = $video;
     }
 
     ob_end_clean();
