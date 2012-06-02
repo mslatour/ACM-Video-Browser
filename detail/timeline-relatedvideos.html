@@ -25,8 +25,8 @@
 
   function init_expand_trigger(tcat, tcat_id, tcat_nav){
     $(tcat_nav).click(function(){
-	expand_tcat(tcat, tcat_id, tcat_nav);
- 	 });
+      expand_tcat(tcat, tcat_id, tcat_nav);
+    });
 	}
 
   function unexpand_tcat(tcat, tcat_id, tcat_nav){
@@ -39,16 +39,22 @@
           content.removeChild(content.firstChild);
         }
         var tcat_data = JSON.parse(data);
-        var container;
-        for(var i = 0; i < tcat_data[tcat_id]["members"].length; i++){
-          if(i % 4 == 0) container = add_video_container(content);
+        var container = add_video_container(content);
+        var len = (tcat_data[tcat_id]["members"].length > 4?4:tcat_data[tcat_id]["members"].length);
+        for(var i = 0; i < len; i++){
           add_video(container, tcat_data[tcat_id]["members"][i]);
         }
-		}
+        if(tcat_data[tcat_id].members.length > 4){
+          var more = add_show_more(container);
+          $(more).click(function(){
+            expand_tcat(tcat, tcat_id, tcat_nav);
+          });
+        }
+		  }
 		});
-	    $(tcat_nav).click(function(){
-		expand_tcat(tcat, tcat_id, tcat_nav);
-	 	 });
+    $(tcat_nav).click(function(){
+      expand_tcat(tcat, tcat_id, tcat_nav);
+    });
 	}
 
 
@@ -60,7 +66,6 @@
       url: '../api/videos.php?mode=list&scope='+tcat_id,
       type: 'get',
       success: function(data){
-        //$(details).show();
         while(content.firstChild){
           content.removeChild(content.firstChild);
         }
@@ -71,26 +76,26 @@
           add_video(container, tcat_data[tcat_id]["members"][i]);
         }
 
-	$('.video').click(function() {
-      var id = $(this).attr('id');
-      $.ajax({
-        url: 'timeline-relatedvideos.php',
-        type: 'post',
-        data:{id: id},
-        success: function(value){
-          $('#popup').html(value);
-          //centers popup
-          centerPopup();
-          //loads popup
-          loadPopup(id);
-        }
-      });
-	});		
+        $('.video').click(function() {
+          var id = $(this).attr('id');
+          $.ajax({
+            url: 'timeline-relatedvideos.php',
+            type: 'post',
+            data:{id: id},
+            success: function(value){
+            $('#popup').html(value);
+            //centers popup
+            centerPopup();
+            //loads popup
+            loadPopup(id);
+            }
+          });
+        });		
       }
     });
-	$(tcat_nav).click(function(){
-	unexpand_tcat(tcat, tcat_id, tcat_nav);
- 	 });
+    $(tcat_nav).click(function(){
+    unexpand_tcat(tcat, tcat_id, tcat_nav);
+    });
   }
 
   function init_event_handlers(){
@@ -210,10 +215,10 @@
     // Content
     var content = document.createElement('div');
     tcat.appendChild(content);
-    var container;
-    for(var i = 0; i < tcat_data["members"].length; i++){
-      if(i % 5 == 0) container = add_video_container(content);
-        add_video(container, tcat_data.members[i]);
+    var container = add_video_container(content);
+    var len = (tcat_data.members.length > 4?4:tcat_data.members.length);
+    for(var i = 0; i < len; i++){
+      add_video(container, tcat_data.members[i]);
     }
     var timebar = document.createElement('div');
     timebar.setAttribute("class", "timeline-bar");
@@ -223,6 +228,13 @@
     link.innerHTML = tcat_data['name_short'];
     timebar.appendChild(link);
     init_expand_trigger(tcat, tcat_data['id'], link);
+    
+    if(tcat_data.members.length > 4){
+      var more = add_show_more(container);
+      $(more).click(function(){
+        expand_tcat(tcat, tcat_data['id'], link);
+      });
+    }
   
     if(tcat_data['id'] == 4){
       var elem = tcat;
@@ -260,6 +272,16 @@
     video_container.appendChild(authors);
     item.appendChild(video_container); 
    container.appendChild(item);
+  }
+
+  function add_show_more(container){
+    var item = document.createElement("li");
+    var show_more = document.createElement("div");
+    show_more.innerHTML = 'Show more';
+    show_more.setAttribute('class', 'show_more');
+    item.appendChild(show_more);
+    container.appendChild(item);
+    return show_more;
   }
 
   function add_video_container(content){
