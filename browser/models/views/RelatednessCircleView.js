@@ -10,6 +10,7 @@ function RelatednessCircleView(app){
 
   this.load = function(video_id){
     var layer = this.getApplication().getFloorLayer();
+    var video_layer = new Layer(app, layer);
 
     var api = new APIConnection();
 
@@ -30,7 +31,7 @@ function RelatednessCircleView(app){
     origin.onMouseOver = function(){};
     origin.onMouseOut = function(){};
 
-    layer.add(origin);
+    video_layer.add(origin);
     origin.scaleToBox(30,30);
     origin.moveToCenter();
     this.setOrigin(origin);
@@ -50,15 +51,18 @@ function RelatednessCircleView(app){
       }
     }
     
-    var c1 = new Arc(50, 0, 2*Math.PI, "red", 2)
-    c1.move(origin.getX(), origin.getY());
-    layer.add(c1);
-    var c2 = new Arc(137, 0, 2*Math.PI, "blue", 2)
-    c2.move(origin.getX(), origin.getY());
-    layer.add(c2);
-    var c3 = new Arc(224, 0, 2*Math.PI, "yellow", 2)
-    c3.move(origin.getX(), origin.getY());
-    layer.add(c3);
+    var outer_circle = new Arc(224, 0, 2*Math.PI, "#0F89BC", 3)
+    outer_circle.move(origin.getX(), origin.getY());
+    layer.add(outer_circle);
+    var inner_circle1 = new Arc(50, 0, 2*Math.PI, "#0F89BC", 1)
+    inner_circle1.move(origin.getX(), origin.getY());
+    layer.add(inner_circle1);
+    var inner_circle1 = new Arc(115, 0, 2*Math.PI, "#0F89BC", 1)
+    inner_circle1.move(origin.getX(), origin.getY());
+    layer.add(inner_circle1);
+    var inner_circle1 = new Arc(180, 0, 2*Math.PI, "#0F89BC", 1)
+    inner_circle1.move(origin.getX(), origin.getY());
+    layer.add(inner_circle1);
     
     var video;
     var timelabel;
@@ -70,7 +74,7 @@ function RelatednessCircleView(app){
         (data[time].members.length/num),
         new Array(3*max/4,2*max/4,max/4),
         50, 
-        224,
+        180,
         5
       );
       for(var i = 0; i < data[time].members.length; i++){
@@ -85,36 +89,20 @@ function RelatednessCircleView(app){
         });
         video_collection.addElement(video.getId(), video);
         video.scaleToBox(50,50);
-        layer.add(video);
+        video_layer.add(video);
         _frags[time].addElement(video.getId(), video);
       }
-      line_point = _frags[time].getPointOnIsoline(3*max/4, offsetAngle, 0);
-      if(
-          (
-            offsetAngle + Math.PI*(data[time].members.length/num) > (Math.PI/4) &&
-            offsetAngle + Math.PI*(data[time].members.length/num) < (3*Math.PI/4)
-          )
-        ||
-          (
-            offsetAngle + Math.PI*(data[time].members.length/num) > (Math.PI+Math.PI/4) &&
-            offsetAngle + Math.PI*(data[time].members.length/num) < (Math.PI+3*Math.PI/4)
-          )
-      ){
-        text_point = _frags[time].getPointOnIsoline(
-          3*max/4,
-          offsetAngle + (Math.PI*(data[time].members.length/num)),
-          15
-        );
-      }else{
-        text_point = _frags[time].getPointOnIsoline(
-          3*max/4,
-          offsetAngle + (Math.PI*(data[time].members.length/num)),
-          30
-        );
-      }
-      layer.add(new Connection(
+      line_point = _frags[time].getPointOnIsoline(3*max/4, offsetAngle, 45);
+      text_point = _frags[time].getPointOnIsoline(
+        3*max/4,
+        offsetAngle + (Math.PI*(data[time].members.length/num)),
+        50
+      );
+      layer.add(new Line(
         origin_point,
-        line_point
+        line_point,
+        "#0F89BC",
+        2
       ));
       timelabel = new Text(
         data[time].name_short
