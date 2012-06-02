@@ -19,12 +19,16 @@ function RelatednessCircleView(app){
     var origin =  new ACMVideo({
       "video_id": video_data.id,
       "screenshot": "../"+video_data.key_frame,
+      "authors": video_data.authors,
       "year": video_data.year,
       "score": video_data.score,
       "keywords": video_data.keywords,
       "terms": video_data.terms,
       "categories": video_data.categories
     });
+
+    origin.onMouseOver = function(){};
+    origin.onMouseOut = function(){};
 
     layer.add(origin);
     origin.scaleToBox(30,30);
@@ -73,6 +77,7 @@ function RelatednessCircleView(app){
         video = new ACMVideo({
           "video_id": data[time].members[i].id,
           "screenshot": "../"+data[time].members[i].key_frame,
+          "authors": data[time].members[i].authors,
           "score": data[time].members[i].score,
           "keywords": data[time].members[i].keywords,
           "terms": data[time].members[i].terms,

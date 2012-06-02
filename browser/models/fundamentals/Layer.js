@@ -124,8 +124,8 @@ function Layer(application,previousLayer){
           if("onMouseOver" in object) object.onMouseOver.call(object, e);
           else if(object.onEvent) object.onEvent.call(object, e, "onMouseOver");
         }else if( object != onMouseMoveTarget ){
-          if("onMouseOut" in onMouseMoveTarget) onMouseMoveTarget.onMouseOut.call(object, e);
-          else if(onMouseMoveTarget.onEvent) onMouseMoveTarget.onEvent.call(object, e, "onMouseOut");
+          if("onMouseOut" in onMouseMoveTarget) onMouseMoveTarget.onMouseOut.call(onMouseMoveTarget, e);
+          else if(onMouseMoveTarget.onEvent) onMouseMoveTarget.onEvent.call(onMouseMoveTarget, e, "onMouseOut");
           if("onMouseOver" in object) object.onMouseOver.call(object, e);
           else if(object.onEvent) object.onEvent.call(object, e, "onMouseOver");
         }
@@ -136,6 +136,10 @@ function Layer(application,previousLayer){
         if(object[callback]) object[callback].call(object,e);
         else if(object.onEvent) object.onEvent.call(object, e, callback);
       }
+    }else if( callback == "onMouseMove" && onMouseMoveTarget != null){
+      if("onMouseOut" in onMouseMoveTarget) onMouseMoveTarget.onMouseOut.call(onMouseMoveTarget, e);
+      else if(onMouseMoveTarget.onEvent) onMouseMoveTarget.onEvent.call(onMouseMoveTarget, e, "onMouseOut");
+      onMouseMoveTarget = null;
     }
     
     if(!object || e.bubble){

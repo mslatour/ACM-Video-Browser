@@ -13,6 +13,10 @@ function Collection(){
     return ( key in _elems );
   }
 
+  this.firstElement = function(){
+    for( var key in _elems) return _elems[key];
+  }
+
   this.getElement = function(key){
     return _elems[key];
   }

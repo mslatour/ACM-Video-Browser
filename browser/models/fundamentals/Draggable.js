@@ -4,7 +4,7 @@ function Draggable(){
   this.className = "Draggable";
 
   var _dragListeners = [];
-  var _dragTriggerActive = false, _dragging = false, _draggable = true;
+  var _dragTriggerActive = false, _dragging = false, _draggable = false;
   var _draggedOver = null;
 
   

@@ -16,6 +16,7 @@ $q_get_terms = "SELECT term_id FROM `Video-Terms` WHERE video_id =  '%s'";
 $q_get_related_videos_terms = "SELECT `video_id` AS related_video FROM `Video-Terms` WHERE `term_id` = '%s' AND NOT `video_id` = '%s'";
 $q_get_keywords = "SELECT `keyword` FROM `Video-Keywords` WHERE `video_id` = '%s' ";
 $q_get_related_videos_keywords = "SELECT `video_id` AS related_video FROM `Video-Keywords` WHERE `keyword` = '%s' AND NOT `video_id` = '%s' AND NOT `keyword` = '' ";
+$q_get_authors = "SELECT `Authors` FROM `Video-Authors` WHERE `id` = '%s'";
 $q_get_video_details = "SELECT * FROM `result` WHERE `id` = '%s'";
 $q_get_time_details = "SELECT * FROM `TimeCategories` WHERE `id` = '%s'";
 
@@ -189,6 +190,21 @@ switch($_GET['mode']){
         $row_video_detail = mysql_fetch_assoc($res_video_detail);
         $videos[$video]["id"] = $video;
         $videos[$video]["key_frame"] = $row_video_detail["key_frame"];
+
+        $res_authors = mysql_query(
+          sprintf(
+            $q_get_authors,
+            mysql_real_escape_string($video)
+          )
+        );
+        while($row_authors = mysql_fetch_assoc($res_authors)){
+          if(!array_key_exists("authors", $videos[$video])){
+            $videos[$video]["authors"] = array(utf8_encode($row_authors['Authors']));
+          }else{
+            $videos[$video]["authors"][] = utf8_encode($row_authors['Authors']);
+          }
+        }
+
         if(!array_key_exists($row_video_detail['time_category'], $result)){
           $res_time_detail = mysql_query(
             sprintf(
@@ -328,7 +344,7 @@ switch($_GET['mode']){
       $video['id'] = $row['id'];
       $result_meta_data = mysql_query(sprintf($q_get_title_authors, mysql_real_escape_string($video['id'])));
       $row_meta_data = mysql_fetch_assoc($result_meta_data);
-	  $video['title'] = utf8_encode($row_meta_data['Title']);
+  	  $video['title'] = utf8_encode($row_meta_data['Title']);
       $video['authors'] = utf8_encode($row_meta_data['Authors']);
       $video['key_frame'] = "../".$row['key_frame'];
 

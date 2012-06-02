@@ -14,6 +14,7 @@ function ACMVideo(data){
 
   var _video_id = data.video_id;
   var _screenshot = data.screenshot;
+  var _authors = (data.authors != undefined ? data.authors : new Array() ); 
   var _year = data.year;
   var _score = data.score;
   var _keywords = (data.keywords != undefined ? data.keywords : new Array() ); 
@@ -21,6 +22,7 @@ function ACMVideo(data){
   var _terms = (data.terms != undefined ? data.terms : new Array() );
 
   this.getId = this.getVideoId = function(){ return _video_id; };
+  this.getAuthors = function(){ return _authors; };
   this.getYear = function(){ return _year; };
   this.getKeywords = function(){ return _keywords; };
   this.getCategories = function(){ return _categories; };
@@ -33,6 +35,17 @@ function ACMVideo(data){
 
   this.onMouseOver = function(e){
     var elem;
+    var authors = this.getAuthors();
+    for(var i = 0; i < authors.length; i++){
+      elem = document.getElementById(
+        "author_"+authors[i].toLowerCase().replace(" ","_")
+      );
+      if(elem){
+        elem.style.fontWeight = 'bold';
+      }else{
+        //alert("author_"+authors[i].toLowerCase().replace(" ","_")+" does not exist!");
+      }
+    }
     var keywords = this.getKeywords();
     for(var i = 0; i < keywords.length; i++){
       elem = document.getElementById(
@@ -41,7 +54,7 @@ function ACMVideo(data){
       if(elem){
         elem.style.fontWeight = 'bold';
       }else{
-        alert("keyword_"+keywords[i].toLowerCase().replace(" ","_")+" does not exist!");
+        //alert("keyword_"+keywords[i].toLowerCase().replace(" ","_")+" does not exist!");
       }
     }
     var categories = this.getCategories();
@@ -52,13 +65,35 @@ function ACMVideo(data){
       if(elem){
         elem.style.fontWeight = 'bold';
       }else{
-        alert("category_"+categories[i].toLowerCase().replace(" ","_")+" does not exist!");
+        //alert("category_"+categories[i].toLowerCase().replace(" ","_")+" does not exist!");
+      }
+    }
+    var terms = this.getTerms();
+    for(var i = 0; i < terms.length; i++){
+      elem = document.getElementById(
+        "term_"+terms[i].toLowerCase().replace(" ","_")
+      )
+      if(elem){
+        elem.style.fontWeight = 'bold';
+      }else{
+        //alert("term_"+terms[i].toLowerCase().replace(" ","_")+" does not exist!");
       }
     }
   }
   
   this.onMouseOut = function(e){
     var elem;
+    var authors = this.getAuthors();
+    for(var i = 0; i < authors.length; i++){
+      elem = document.getElementById(
+        "author_"+authors[i].toLowerCase().replace(" ","_")
+      );
+      if(elem){
+        elem.style.fontWeight = 'normal';
+      }else{
+        //alert("author_"+authors[i].toLowerCase().replace(" ","_")+" does not exist!");
+      }
+    }
     var keywords = this.getKeywords();
     for(var i = 0; i < keywords.length; i++){
       elem = document.getElementById(
@@ -67,7 +102,7 @@ function ACMVideo(data){
       if(elem){
         elem.style.fontWeight = 'normal';
       }else{
-        alert("keyword_"+keywords[i].toLowerCase().replace(" ","_")+" does not exist!");
+        //alert("keyword_"+keywords[i].toLowerCase().replace(" ","_")+" does not exist!");
       }
     }
     var categories = this.getCategories();
@@ -78,9 +113,37 @@ function ACMVideo(data){
       if(elem){
         elem.style.fontWeight = 'normal';
       }else{
-        alert("category_"+categories[i].toLowerCase().replace(" ","_")+" does not exist!");
+        //alert("category_"+categories[i].toLowerCase().replace(" ","_")+" does not exist!");
       }
     }
+    var terms = this.getTerms();
+    for(var i = 0; i < terms.length; i++){
+      elem = document.getElementById(
+        "term_"+terms[i].toLowerCase().replace(" ","_")
+      )
+      if(elem){
+        elem.style.fontWeight = 'normal';
+      }else{
+        //alert("term_"+terms[i].toLowerCase().replace(" ","_")+" does not exist!");
+      }
+    }
+  }
+
+  this.onMouseDown = function(e){
+    var id = this.getId();
+    disablePopup();
+    $.ajax({
+      url: 'timeline-relatedvideos.php',
+      type: 'post',
+      data:{id: id},
+      success: function(value){
+        $('#popup').html(value);
+        //centers popup
+        centerPopup();
+        //loads popup
+        loadPopup(id);
+      }
+    });
   }
 
   this.getRelevanceScore = function(){ return _score; }
