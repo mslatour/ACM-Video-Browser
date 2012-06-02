@@ -56,12 +56,13 @@ ul ul li {
 }
 
 .tl-events {
-    width: 6000px;
-    list-style: none;
-    margin: 0px;
+  width: 6000px;
+  list-style: none;
+  margin: 0px;
   	height: 510px;
 	padding: 0px;
 	position: absolute; bottom: 5px;
+
 }
 
 .tl-events li {

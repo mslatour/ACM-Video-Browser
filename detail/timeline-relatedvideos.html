@@ -25,19 +25,11 @@
 
   function init_expand_trigger(tcat, tcat_id, tcat_nav){
     $(tcat_nav).click(function(){
-	if(true)
-	{
-		expand_tcat(tcat, tcat_id);
+	expand_tcat(tcat, tcat_id, tcat_nav);
+ 	 });
 	}
-	else
-	{
-		unexpand_tcat(tcat, tcat_id);
-	}
-    });
-  }
 
-/*
-  function unexpand_tcat(tcat, tcat_id){
+  function unexpand_tcat(tcat, tcat_id, tcat_nav){
     var content = tcat.getElementsByTagName("div")[0];
     $.ajax({
       url: '../api/videos.php?mode=list&limited=1',
@@ -54,11 +46,14 @@
         }
 		}
 		});
+	    $(tcat_nav).click(function(){
+		expand_tcat(tcat, tcat_id, tcat_nav);
+	 	 });
 	}
 
-*/
 
-  function expand_tcat(tcat, tcat_id){
+
+  function expand_tcat(tcat, tcat_id, tcat_nav){
     //var details = tcat.getElementsByTagName("div")[0];
     var content = tcat.getElementsByTagName("div")[0];
     $.ajax({
@@ -93,6 +88,9 @@
 	});		
       }
     });
+	$(tcat_nav).click(function(){
+	unexpand_tcat(tcat, tcat_id, tcat_nav);
+ 	 });
   }
 
   function init_event_handlers(){
@@ -305,17 +303,10 @@
       document.getElementById("menu-navigation-menu")
     );
 
-//CODE TO MAKE NAVIGATION ARROWS WORK
-	var slides = $('.tl-events li');
-	var slideTotal = slides.length;
-	var slideWidth = 350;
-	var slideCurrent = 0;
 
+//CODE TO MAKE NAVIGATION ARROWS WORK
 	$('#timeline span').click(function() {
 		if ($(this).attr('id') == 'next') {
-			//slideCurrent = slideCurrent + 1;
-			//$("#timeline").scrollLeft() += 300;
-			//var currentScroll = $("#timeline").scrollLeft() - 100;
 		$('#timeline').animate({
 			scrollLeft: "+=200"
 		});
