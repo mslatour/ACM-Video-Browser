@@ -17,6 +17,9 @@
         for( var tcat_id in tcats ){
           var tcat = add_tcat(timeline, tcats[tcat_id]);
         }
+        if(tcat){
+          $(timeline).width(tcat.offsetLeft + tcat.offsetWidth + tcat.style.marginLeft+10);
+        }
         init_event_handlers();
       }
     });
