@@ -110,6 +110,15 @@
       if ($(this).data('down') == true) {
         this.scrollLeft = $(this).data('scrollLeft') + $(this).data('x') - event.clientX;
       }
+	if( $(this).scrollLeft() == 0)
+	{
+		$('#previous').hide();
+	}
+	else
+	{
+		$('#previous').show();
+	}
+
     // Mousewheel does not always seem to work - SL
     }).mousewheel(function (event, delta) {
         this.scrollLeft -= (delta * 30);
@@ -117,6 +126,7 @@
         'overflow' : 'hidden',
         'cursor' : '-moz-grab'
     });
+
     
     $(window).mouseout(function (event) {
       if ($('#timeline').data('down')) {
@@ -286,7 +296,6 @@
     navmenu.appendChild(nav);
     return link;
   }
-
 */
 
 //Sends id of selected video to php script and returns information for popup.
@@ -304,36 +313,20 @@
 
 	$('#timeline span').click(function() {
 		if ($(this).attr('id') == 'next') {
-			slideCurrent = slideCurrent + 1;
-		}
-		else {
-			slideCurrent = slideCurrent - 1;
-		}
-		navigation(slideCurrent);
-
-		// Move timeline.
-		$('.tl-events').animate({
-			'marginLeft' : (-slideCurrent * slideWidth)
+			//slideCurrent = slideCurrent + 1;
+			//$("#timeline").scrollLeft() += 300;
+			//var currentScroll = $("#timeline").scrollLeft() - 100;
+		$('#timeline').animate({
+			scrollLeft: "+=200"
 		});
-	});
-
-	function navigation(slideCurrent) {
-		//Hide previous-arrow when at the end.
-		if ( slideTotal - 1 == slideCurrent) {
-			$('#next').hide()
 		}
 		else {
-			$('#next').show()
+		$('#timeline').animate({
+			scrollLeft: "-=200"
+		});
 		}
 
-		//Hide previous-arrow when at the beginning.
-		if (slideCurrent == 0) {
-			$('#previous').hide()
-		}
-		else {
-			$('#previous').show()
-		}
-	}
+		});
 
 	// Zorg ervoor dat de 'vorige' knop wordt weggelaten wanneer de pagina wordt geladen
 	navigation(slideCurrent);
