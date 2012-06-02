@@ -26,8 +26,8 @@ function Line(from, to, stroke, lineWidth){
    **/
   this.draw = function(context){
     _parent.draw(context);
-    context.moveTo(0,0);
-    context.lineTo(this.getFrom(), this.getTo());
+    context.moveTo(this.getFrom().getX(),this.getFrom().getY());
+    context.lineTo(this.getTo().getX(), this.getTo().getY());
     context.lineWidth = this.getLineWidth();
     context.strokeStyle = this.getStroke();
     context.stroke();
