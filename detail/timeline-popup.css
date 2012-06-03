@@ -119,12 +119,12 @@ ul ul li {
 	height: 80px;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	cursor: pointer;
 }
 
 .tl-events .column .video {
 	float:left;
 	margin-right: 5px;
-	cursor: pointer;
 }
 
 .tl-events .column .title {

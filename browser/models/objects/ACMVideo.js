@@ -89,7 +89,6 @@ function ACMVideo(data){
   this.onMouseOut = function(e){
     // Remove title
     document.getElementById("related_title").innerHTML = "";
-
     // Remove related highlights
     var elem;
     var authors = this.getAuthors();
