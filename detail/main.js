@@ -2,7 +2,7 @@ var MAX_ELEM_COLLAPSED = 8;
 var DEFAULT_START_TCAT = 4;
 function init_timeline(timeline, navmenu){
   $.ajax({
-    url: '../api/videos.php?mode=list&limited=1',
+    url: '../api/videos.php?mode=list&limited='+(MAX_ELEM_COLLAPSED+1),
     type: 'get',
     success: function(data){
       var tcats = JSON.parse(data);
@@ -37,7 +37,7 @@ function init_expand_trigger(tcat, tcat_id, tcat_nav){
 function unexpand_tcat(tcat, tcat_id, tcat_nav){
   var content = tcat.getElementsByTagName("div")[0];
   $.ajax({
-    url: '../api/videos.php?mode=list&limited=1',
+    url: '../api/videos.php?mode=list&limited='+(MAX_ELEM_COLLAPSED+1),
     type: 'get',
     success: function(data){
       while(content.firstChild){

@@ -295,7 +295,7 @@ switch($_GET['mode']){
   default:
     ob_start();
     // Set queries
-    $q_get_videos_limited = "SELECT * FROM `result` WHERE time_category = %d ORDER BY name LIMIT 9";
+    $q_get_videos_limited = "SELECT * FROM `result` WHERE time_category = %d ORDER BY name LIMIT %d";
     $q_get_videos = "SELECT * FROM `result` WHERE time_category = %d";
     $q_get_time_categories = "SELECT * FROM TimeCategories";
     $q_get_time_categories_scope = "SELECT * FROM TimeCategories WHERE id = %d";
@@ -317,11 +317,12 @@ switch($_GET['mode']){
       $row['members'] = array();
       $tcats[$row['id']] = $row;
       
-      if($_GET['limited'] == 1){
+      if(isset($_GET['limited']) && intval($_GET['limited']) > 0){
         $result_videos = mysql_query(
           sprintf(
             $q_get_videos_limited,
-            mysql_real_escape_string($row['id'])
+            mysql_real_escape_string($row['id']),
+            mysql_real_escape_string(intval($_GET['limited']))
           )
         );
       }else{
