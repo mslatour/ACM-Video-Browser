@@ -20,6 +20,7 @@ function RelatednessCircleView(app){
     var origin =  new ACMVideo({
       "video_id": video_data.id,
       "screenshot": "../"+video_data.key_frame,
+      "title": video_data.title,
       "authors": video_data.authors,
       "year": video_data.year,
       "score": video_data.score,
@@ -81,6 +82,7 @@ function RelatednessCircleView(app){
         video = new ACMVideo({
           "video_id": data[time].members[i].id,
           "screenshot": "../"+data[time].members[i].key_frame,
+          "title": data[time].members[i].title,
           "authors": data[time].members[i].authors,
           "score": data[time].members[i].score,
           "keywords": data[time].members[i].keywords,

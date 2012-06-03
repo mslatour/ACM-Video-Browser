@@ -17,6 +17,7 @@ $q_get_related_videos_terms = "SELECT `video_id` AS related_video FROM `Video-Te
 $q_get_keywords = "SELECT `keyword` FROM `Video-Keywords` WHERE `video_id` = '%s' ";
 $q_get_related_videos_keywords = "SELECT `video_id` AS related_video FROM `Video-Keywords` WHERE `keyword` = '%s' AND NOT `video_id` = '%s' AND NOT `keyword` = '' ";
 $q_get_authors = "SELECT `Authors` FROM `Video-Authors` WHERE `id` = '%s'";
+$q_get_title_authors = "SELECT Title, Authors FROM Metadata WHERE id = '%s'";
 $q_get_video_details = "SELECT * FROM `result` WHERE `id` = '%s'";
 $q_get_time_details = "SELECT * FROM `TimeCategories` WHERE `id` = '%s'";
 
@@ -190,6 +191,10 @@ switch($_GET['mode']){
         $row_video_detail = mysql_fetch_assoc($res_video_detail);
         $videos[$video]["id"] = $video;
         $videos[$video]["key_frame"] = $row_video_detail["key_frame"];
+      
+        $result_meta_data = mysql_query(sprintf($q_get_title_authors, mysql_real_escape_string($video)));
+        $row_meta_data = mysql_fetch_assoc($result_meta_data);
+        $videos[$video]["title"] = utf8_encode($row_meta_data['Title']);
 
         $res_authors = mysql_query(
           sprintf(
@@ -232,6 +237,9 @@ switch($_GET['mode']){
         )
       );
       $row_details = mysql_fetch_assoc($res_details);
+        
+      $result_meta_data = mysql_query(sprintf($q_get_title_authors, mysql_real_escape_string($_GET['id'])));
+      $row_meta_data = mysql_fetch_assoc($result_meta_data);
       
       // Get keywords
       $res_keywords = mysql_query(
@@ -273,6 +281,7 @@ switch($_GET['mode']){
         array(
           "id"=>$row_details['id'], 
           "key_frame"=>$row_details['key_frame'],
+          "title" => utf8_encode($row_meta_data['Title']),
           "time_category"=>$row_details['time_category'],
           "year"=>$row_details['year'],
           "keywords"=>$keywords,
@@ -290,7 +299,6 @@ switch($_GET['mode']){
     $q_get_videos = "SELECT * FROM `result` WHERE time_category = %d";
     $q_get_time_categories = "SELECT * FROM TimeCategories";
     $q_get_time_categories_scope = "SELECT * FROM TimeCategories WHERE id = %d";
-  	$q_get_title_authors = "SELECT Title, Authors FROM Metadata WHERE id = '%s'";
 
     $tcats = array();
 
@@ -338,7 +346,6 @@ switch($_GET['mode']){
       }
 
     }
-
     ob_end_clean();
     echo json_encode($tcats);
     break;
