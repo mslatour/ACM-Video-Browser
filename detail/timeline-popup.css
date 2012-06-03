@@ -119,12 +119,12 @@ ul ul li {
 	height: 80px;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	cursor: pointer;
 }
 
 .tl-events .column .video {
 	float:left;
 	margin-right: 5px;
-	cursor: pointer;
 }
 
 .tl-events .column .title {
@@ -307,13 +307,20 @@ font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, d
 }
 
 .video-column {
-	width: 500px;
+	width: 400px;
 }
 
 .related-column {
 	width: 400px;
 	padding: 25px;
 	margin-left: 20px;
+}
+
+.related_title {
+  margin-top: 20px;
+  margin-left: 10px;
+  font-style: italic;
+  min-height: 30px;
 }
 
 .popupColumns li h3{
@@ -347,7 +354,7 @@ font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, d
   position:fixed;
   _position:absolute; /* hack for internet explorer 6*/
   height:620px;
-  width:1200px;
+  width:1100px;
   background:#FFFFFF;
   border:2px solid #cecece;
   z-index:4;

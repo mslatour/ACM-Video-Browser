@@ -274,8 +274,9 @@ $prefix = '';
 			</ul>
 			</li>
 		<li class="related-column">
-		<h3>RELATED VIDEOS</h3>	
-		<canvas id="canvas" width="600" height="540"></canvas>
+		<h3>RELATED VIDEOS</h3>
+    <div style='margin-top:15px; margin-left: 10px; font-style: italic; min-height: 30px;' id='related_title'></div>
+		<canvas id="canvas" width="600" height="500"></canvas>
 		</li>
 		</ul>
 	</div><!--popupContact-->

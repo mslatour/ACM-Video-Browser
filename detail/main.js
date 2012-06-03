@@ -77,8 +77,8 @@ function expand_tcat(tcat, tcat_id, tcat_nav){
         add_video(container, tcat_data[tcat_id]["members"][i]);
       }
 
-      $('.video').click(function() {
-        var id = $(this).attr('id');
+      $('.video_container').click(function() {
+        var id = $(this).children(".video:first").attr('id');
         $.ajax({
           url: 'timeline-relatedvideos.php',
           type: 'post',
@@ -144,8 +144,8 @@ function init_event_handlers(){
     }
   });
 
-  $('.video').click(function() {
-    var id = $(this).attr('id');
+  $('.video_container').click(function() {
+    var id = $(this).children(".video:first").attr('id');
     $.ajax({
       url: 'timeline-relatedvideos.php',
       type: 'post',

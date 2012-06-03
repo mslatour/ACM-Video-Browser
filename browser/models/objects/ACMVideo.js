@@ -14,6 +14,7 @@ function ACMVideo(data){
 
   var _video_id = data.video_id;
   var _screenshot = data.screenshot;
+  var _title = data.title;
   var _authors = (data.authors != undefined ? data.authors : new Array() ); 
   var _year = data.year;
   var _score = data.score;
@@ -22,6 +23,7 @@ function ACMVideo(data){
   var _terms = (data.terms != undefined ? data.terms : new Array() );
 
   this.getId = this.getVideoId = function(){ return _video_id; };
+  this.getTitle = function(){ return _title; };
   this.getAuthors = function(){ return _authors; };
   this.getYear = function(){ return _year; };
   this.getKeywords = function(){ return _keywords; };
@@ -34,6 +36,9 @@ function ACMVideo(data){
   };
 
   this.onMouseOver = function(e){
+    // Set title
+    document.getElementById("related_title").innerHTML = this.getTitle();
+    // Highlight related
     var elem;
     var authors = this.getAuthors();
     for(var i = 0; i < authors.length; i++){
@@ -82,6 +87,9 @@ function ACMVideo(data){
   }
   
   this.onMouseOut = function(e){
+    // Remove title
+    document.getElementById("related_title").innerHTML = "";
+    // Remove related highlights
     var elem;
     var authors = this.getAuthors();
     for(var i = 0; i < authors.length; i++){
