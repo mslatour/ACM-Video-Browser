@@ -260,50 +260,49 @@ clear: both;
 #popupContact div, span, applet, object, iframe, h2, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em,
 font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, fieldset, form, label, legend, table, caption, tbody,
  tfoot, thead, tr, th, td {
-border:0pt none;
-font-family:inherit;
-font-size:100%;
-font-style:inherit;
-font-weight:inherit;
-margin:0pt;
-padding:0pt;
-vertical-align:baseline;
+  border:0pt none;
+  font-family:inherit;
+  font-size:100%;
+  font-style:inherit;
+  font-weight:inherit;
+  margin:0pt;
+  padding:0pt;
+  vertical-align:baseline;
 }
 
 #popupContact {
-background:#fff none repeat scroll 0%;
-line-height:1;
-font-size: 12px;
-font-family:arial,sans-serif;
-margin:0pt;
-height:100%;
+  background:#fff none repeat scroll 0%;
+  line-height:1;
+  font-size: 12px;
+  font-family:arial,sans-serif;
+  margin:0pt;
+  height:100%;
 }
 
 #video-description p {
-line-height:150%;
-
+  line-height:150%;
 }
 
 .popupColumns  {
-    list-style: none;
-    margin: 0px;
+  list-style: none;
+  margin: 0px;
 }
 
 .popupColumns li {
-    float: left;
-    margin-right: 10px;
+  float: left;
+  margin-right: 10px;
 	padding: 0px 5px 0px 5px;
 }
 
 .video-column {
-border-right:1px dotted #D3D3D3;
-padding-right:2px;
-margin-right:20px;
+  border-right:1px dotted #D3D3D3;
+  padding-right:2px;
+  margin-right:20px;
 }
 
 .popupColumns ul {
-    list-style: none;
-    margin: 0;
+  list-style: none;
+  margin: 0;
 	padding: 0;
 }
 
@@ -318,67 +317,65 @@ margin-right:20px;
 }
 
 .popupColumns li h3{
-margin: 0px;
+  margin: 0px;
 }
 
 #popupContact a {
-cursor: pointer;
-text-decoration:none;
+  cursor: pointer;
+  text-decoration:none;
 }
 
 #popupContact img {
-margin: 0px 5px;
+  margin: 0px 5px;
 }
 
 #backgroundPopup{
-display:none;
-position:fixed;
-_position:absolute; /* hack for internet explorer 6*/
-height:100%;
-width:100%;
-top:0;
-left:0;
-background:#000000;
-border:1px solid #cecece;
-z-index:1;
+  display:none;
+  position:fixed;
+  _position:absolute; /* hack for internet explorer 6*/
+  height:100%;
+  width:100%;
+  top:0;
+  left:0;
+  background:#000000;
+  border:1px solid #cecece;
+  z-index:3;
 }
 
 #popupContact{
-display: none;
-position:fixed;
-_position:absolute; /* hack for internet explorer 6*/
-height:620px;
-width:1200px;
-background:#FFFFFF;
-border:2px solid #cecece;
-z-index:2;
-padding:12px;
-font-size:13px;
-overflow-y: auto;
+  display: none;
+  position:fixed;
+  _position:absolute; /* hack for internet explorer 6*/
+  height:620px;
+  width:1200px;
+  background:#FFFFFF;
+  border:2px solid #cecece;
+  z-index:4;
+  padding:12px;
+  font-size:13px;
+  overflow-y: auto;
 }
 
 #popupContact h1{
-text-align:left;
-color:#1b4761;
-font-size:22px;
-font-weight:700;
-border-bottom:1px dotted #D3D3D3;
-padding-bottom:2px;
-margin-bottom:20px;
+  text-align:left;
+  color:#1b4761;
+  font-size:22px;
+  font-weight:700;
+  border-bottom:1px dotted #D3D3D3;
+  padding-bottom:2px;
+  margin-bottom:20px;
 }
 
 #popupContactClose{
-font-size:14px;
-line-height:14px;
-right:6px;
-top:4px;
-position:absolute;
-color:#6fa5fd;
-font-weight:700;
-display:block;
+  font-size:14px;
+  line-height:14px;
+  right:6px;
+  top:4px;
+  position:absolute;
+  color:#6fa5fd;
+  font-weight:700;
+  display:block;
 }
-
-
 
 #timeline .arrow{
 	height:86px;
@@ -397,5 +394,3 @@ display:block;
 
 #timeline .next{ background-position:right top;right:0;}
 #timeline .next:hover{ background-position:right bottom;}
-
-
