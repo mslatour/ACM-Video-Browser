@@ -120,6 +120,13 @@ function init_event_handlers(){
     } else {
       $('#previous').show();
     }
+    if ( $(this).scrollLeft() ==  (this.scrollWidth - this.clientWidth) ){
+      $('#next').hide();
+    } else {
+      $('#next').show();
+    }
+
+
   }).mousewheel(function (event, delta) {
     this.scrollLeft -= (delta * 30);
   }).css({
