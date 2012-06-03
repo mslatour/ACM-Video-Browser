@@ -102,13 +102,13 @@ ul ul li {
 }
 
 .tl-events .column {
-    float: left;
-    display: block;
-    width: 300px;
+  float: left;
+  display: block;
+  width: 100px;
 }
 
 .tl-events .column li {
-    list-style: none;
+  list-style: none;
 	padding: 0px;
 	width: 100%;
 }
@@ -117,14 +117,24 @@ ul ul li {
 	width: 100%;
 	margin: 3px 2px;
 	height: 80px;
-	overflow: hidden;
-	text-overflow: ellipsis;
 	cursor: pointer;
+  position: relative;
 }
 
 .tl-events .column .video {
 	float:left;
 	margin-right: 5px;
+}
+
+.tl-events .column .balloon {
+  display: none;
+  width: 200px;
+  position: absolute;
+  top: 0px;
+  left: 100px;
+  min-height: 72px;
+  background: white;
+  z-index: 2;
 }
 
 .tl-events .column .title {
@@ -133,11 +143,13 @@ ul ul li {
 
 .tl-events .column .authors {
 	font-style:italic;
-	width: 100%;
+  display: block;
+  float: left;
+	width: 200px;
 	font-size:90%;
-white-space: nowrap;
-overflow: hidden;
-text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .tl-events .column .prize {

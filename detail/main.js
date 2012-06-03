@@ -1,3 +1,5 @@
+var MAX_ELEM_COLLAPSED = 8;
+var DEFAULT_START_TCAT = 4;
 function init_timeline(timeline, navmenu){
   $.ajax({
     url: '../api/videos.php?mode=list&limited=1',
@@ -42,12 +44,13 @@ function unexpand_tcat(tcat, tcat_id, tcat_nav){
         content.removeChild(content.firstChild);
       }
       var tcat_data = JSON.parse(data);
-      var container = add_video_container(content);
-      var len = (tcat_data[tcat_id]["members"].length > 4?4:tcat_data[tcat_id]["members"].length);
+      var container;
+      var len = (tcat_data[tcat_id]["members"].length > MAX_ELEM_COLLAPSED?MAX_ELEM_COLLAPSED:tcat_data[tcat_id]["members"].length);
       for(var i = 0; i < len; i++){
+        if(i % 4 == 0) container = add_video_container(content);
         add_video(container, tcat_data[tcat_id]["members"][i]);
       }
-      if(tcat_data[tcat_id].members.length > 4){
+      if(tcat_data[tcat_id].members.length > MAX_ELEM_COLLAPSED){
         var more = add_show_more(container);
         $(more).click(function(){
           expand_tcat(tcat, tcat_id, tcat_nav);
@@ -196,9 +199,10 @@ function add_tcat(timeline, tcat_data){
   // Content
   var content = document.createElement('div');
   tcat.appendChild(content);
-  var container = add_video_container(content);
-  var len = (tcat_data.members.length > 4?4:tcat_data.members.length);
+  var container;
+  var len = (tcat_data.members.length > MAX_ELEM_COLLAPSED?MAX_ELEM_COLLAPSED:tcat_data.members.length);
   for(var i = 0; i < len; i++){
+    if(i % 4 == 0) container = add_video_container(content);
     add_video(container, tcat_data.members[i]);
   }
   var timebar = document.createElement('div');
@@ -210,14 +214,14 @@ function add_tcat(timeline, tcat_data){
   timebar.appendChild(link);
   init_expand_trigger(tcat, tcat_data['id'], link);
   
-  if(tcat_data.members.length > 4){
+  if(tcat_data.members.length > MAX_ELEM_COLLAPSED){
     var more = add_show_more(container);
     $(more).click(function(){
       expand_tcat(tcat, tcat_data['id'], link);
     });
   }
 
-  if(tcat_data['id'] == 4){
+  if(tcat_data['id'] == DEFAULT_START_TCAT){
     var elem = tcat;
     do{
       timeline.offsetParent.scrollLeft += elem.offsetLeft;
@@ -239,6 +243,7 @@ function add_video(container, video_data){
   video.setAttribute("width", "96");
   video.setAttribute("height", "72");
 
+
   var title = document.createElement("span");
   title.setAttribute("class", "title");
   title.innerHTML = video_data.title;
@@ -258,21 +263,31 @@ function add_video(container, video_data){
     }
   }
 
+  var balloon = document.createElement('div');
+  balloon.setAttribute('class', 'balloon');
+
   video_container.appendChild(video);
-  video_container.appendChild(title);
-  video_container.appendChild(document.createElement("br"));
-  video_container.appendChild(authors);
+  balloon.appendChild(title);
+  balloon.appendChild(document.createElement("br"));
+  balloon.appendChild(authors);
   if (typeof( prize ) != 'undefined' )
   {
-    video_container.appendChild(document.createElement("br"));
+    balloon.appendChild(document.createElement("br"));
     var cup_icon = document.createElement('img');
     cup_icon.setAttribute("class", "icon");
     cup_icon.setAttribute("src", "images/cup.png");
     cup_icon.setAttribute("width", "12");
     cup_icon.setAttribute("height", "12");
-    video_container.appendChild(cup_icon);
-    video_container.appendChild(prize);
+    balloon.appendChild(cup_icon);
+    balloon.appendChild(prize);
   }
+  video.onmouseover = function(){
+    balloon.style.display = "block";  
+  }
+  video.onmouseout = function(){
+    balloon.style.display = "none";  
+  }
+  video_container.appendChild(balloon);
   item.appendChild(video_container); 
   container.appendChild(item);
 }

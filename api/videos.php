@@ -295,7 +295,7 @@ switch($_GET['mode']){
   default:
     ob_start();
     // Set queries
-    $q_get_videos_limited = "SELECT * FROM `result` WHERE time_category = %d ORDER BY name LIMIT 5";
+    $q_get_videos_limited = "SELECT * FROM `result` WHERE time_category = %d ORDER BY name LIMIT 9";
     $q_get_videos = "SELECT * FROM `result` WHERE time_category = %d";
     $q_get_time_categories = "SELECT * FROM TimeCategories";
     $q_get_time_categories_scope = "SELECT * FROM TimeCategories WHERE id = %d";
