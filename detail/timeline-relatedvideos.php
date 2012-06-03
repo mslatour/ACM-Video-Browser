@@ -13,7 +13,7 @@ mysql_select_db("my_db", $con);
   //gets title, authors, video, paper and year of selected video.
   $res_meta_data = mysql_query(
     sprintf(
-      "SELECT Metadata.title AS title, Metadata.authors AS authors, result.video_link AS videolink, result.paper_link AS paperlink, Metadata.year AS year, Metadata.Keywords AS keywords FROM Metadata, result WHERE Metadata.id = '%s' AND Metadata.id = result.id",
+      "SELECT Metadata.title AS title, Metadata.authors AS authors, result.video_link AS videolink, result.paper_link AS paperlink, result.prize_winner AS winner, Metadata.year AS year, Metadata.Keywords AS keywords FROM Metadata, result WHERE Metadata.id = '%s' AND Metadata.id = result.id",
       mysql_real_escape_string($id)
     )
   );
@@ -206,6 +206,21 @@ $prefix = '';
 			<p><?php if (! $row_meta_data['paperlink'] == '') {echo "<a name='FullTextPdf' title='FullText Pdf' href=../" . $row_meta_data['paperlink'] . " target='_blank'><img src='images/pdf_logo.gif' alt='Pdf' class='fulltext_lnk' border='0'>Pdf</a>";} 
 			echo "<a name='Video' href=../" . $row_meta_data['videolink'] . "><img src='images/Download-32.png' class='fullvideo_lnk' border='0'>Download video</a>";
 			?></p>
+			<p><?php if ( $row_meta_data['winner'] != 0)
+					{
+					echo "<img src='images/cup.png' width='12' height='12'>";
+					if ( $row_meta_data['winner'] == 1)
+					{
+              echo "<i>Prize winner</i>";
+					}
+          else if ($row_meta_data['winner'] == 2)
+          {
+              echo "<i>Audience favourite</i>";
+
+          }
+					}
+					 ?></p> 
+
 			<p><?php if ( sizeof($authors) > 0)
 					{
 					$prefix = '';
